@@ -92,22 +92,26 @@
           icon="el-icon-edit"
           type="primary" circle
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)">
+          @click="handleEdit(scope.row)">
           </el-button>
           <el-button
           size="mini"
           type="danger" circle
           icon="el-icon-delete"
-          @click="handleDelete(scope.$index, scope.row)">
+          @click="handleDelete(scope.row)">
           </el-button>
         </template>
       </el-table-column>
     </el-table>
+    <div style="margin-top: 20px">
+      <el-button>切换第二、第三行的选中状态</el-button>
+      <el-button >取消选择</el-button>
+    </div>
   </div>
 </template>
 
 <script>
-import { TeacherList } from "@/api/teacher";
+import { TeacherList,TeacherDelete } from "@/api/teacher";
 
 export default {
   filters: {
@@ -154,12 +158,43 @@ export default {
      this.fetchData();
     },
     // 编辑按钮
-    handleEdit(index, row) {
+    handleEdit(row) {
       console.log(index, row);
     },
     // 删除按钮
-    handleDelete(index, row) {
-      console.log(index, row);
+    handleDelete(row) {
+       this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+            console.log(1111)
+            TeacherDelete(row._id).then(res => {
+            // console.log(res)
+            if(res.code===1){
+              this.$message({
+              type: 'success',
+              message: '删除成功!'
+              });
+              this.fetchData()
+            }else{
+              this.$message({
+              type: 'info',
+              message: '删除失败!'
+              });
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+     /*  console.log(row);
+      TeacherDelete(row._id).then(res => {
+        console.log(res)
+      })
+ */
     }
   }
 };
