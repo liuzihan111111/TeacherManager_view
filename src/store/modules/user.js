@@ -1,4 +1,5 @@
-import { login, logout, getInfo } from '@/api/user'
+import { logout } from '@/api/user'
+import { Login } from '@/api/admin'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -25,11 +26,17 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
+      // 调用登录接口
+      Login({ username: username.trim(), password: password }).then(response => {
+        const data = response
+        console.log(data)
+        if (data.code === 1) {
+          commit('SET_TOKEN', data.mess.username)
+          setToken(data.mess.username)
+          resolve()
+        } else {
+          reject('登录失败！')
+        }
       }).catch(error => {
         reject(error)
       })
@@ -38,7 +45,7 @@ const actions = {
 
   // get user info
   getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
+    /*  return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const { data } = response
 
@@ -54,7 +61,7 @@ const actions = {
       }).catch(error => {
         reject(error)
       })
-    })
+    }) */
   },
 
   // user logout

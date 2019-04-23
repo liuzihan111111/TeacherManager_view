@@ -1,13 +1,19 @@
 
 // 引入axios
 import request from '@/utils/request'
-import { baseurl } from '../baseurl'
+
 /**
- * 教师基本信息列表
+ * 登录
+ * params:
+ * username
+ * password
  */
-export function TeacherList() {
+export function Login(data) {
+  console.log(data)
   return request({
-    url: baseurl + '/api/v1/teacherList',
-    method: 'get'
+    url: '/api/v1//admin_login',
+    method: 'post',
+    data
   })
 }
+

@@ -1,8 +1,8 @@
 {
-  "name": "vue-admin-template",
+  "name": "Teacher Manager",
   "version": "4.1.0",
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
-  "author": "Pan <panfree23@gmail.com>",
+  "author": "LiuZihan",
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",
