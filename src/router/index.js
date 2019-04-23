@@ -65,13 +65,13 @@ export const constantRoutes = [
       {
         path: 'TeacherList',
         name: 'TeacherList',
-        component: () => import('@/views/list/index'),
+        component: () => import('@/views/teacher/index'),
         meta: { title: '教师信息列表', icon: 'table' }
       },
       {
         path: 'TeacherAdd',
         name: 'TeacherAdd',
-        component: () => import('@/views/add/index'),
+        component: () => import('@/views/teacher/add'),
         meta: { title: '教师信息增加', icon: 'tree' }
       }
     ]

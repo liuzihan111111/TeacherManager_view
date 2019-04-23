@@ -14,7 +14,7 @@
         <el-input placeholder="查询条件" v-model="formInline.user"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="SearchHandle">查询</el-button>
+        <el-button type="primary" plain icon="el-icon-search" @click="SearchHandle"></el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -78,8 +78,29 @@
       <el-table-column align="center" prop="date" label="所属院系" width="100">
         <template slot-scope="scope">{{ scope.row.major_name }}</template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="备注">
-        <template slot-scope="scope" show-overflow-tooltip=true width="100">{{ scope.row.remark }}</template>
+      <el-table-column
+        align="center"
+        prop="created_at"
+        label="备注"
+        show-overflow-tooltip=true
+        width="100" >
+        <template slot-scope="scope">{{ scope.row.remark }}</template>
+      </el-table-column>
+      <el-table-column align="center" prop="created_at" label="操作" width="140" fixed='right'>
+        <template slot-scope="scope" >
+          <el-button
+          icon="el-icon-edit"
+          type="primary" circle
+          size="mini"
+          @click="handleEdit(scope.$index, scope.row)">
+          </el-button>
+          <el-button
+          size="mini"
+          type="danger" circle
+          icon="el-icon-delete"
+          @click="handleDelete(scope.$index, scope.row)">
+          </el-button>
+        </template>
       </el-table-column>
     </el-table>
   </div>
@@ -113,6 +134,7 @@ export default {
     this.fetchData();
   },
   methods: {
+    // 获取列表信息
     fetchData() {
       this.listLoading = true;
       const title = this.formInline.region;
@@ -127,8 +149,17 @@ export default {
         this.listLoading = false;
       });
     },
+    // 按条件查询
     SearchHandle() {
      this.fetchData();
+    },
+    // 编辑按钮
+    handleEdit(index, row) {
+      console.log(index, row);
+    },
+    // 删除按钮
+    handleDelete(index, row) {
+      console.log(index, row);
     }
   }
 };
