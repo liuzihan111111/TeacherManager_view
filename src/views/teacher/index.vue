@@ -26,8 +26,14 @@
       empty-text="无"
       highlight-current-row
       :default-sort="{prop: 'id', order: 'undescending'}"
+      @selection-change="handleSelectionChange">
     >
-      <el-table-column align="center" label="工号" sortable prop="id" fixed width="80">
+      <el-table-column
+        type="selection"
+        align="center"
+        width="55">
+      </el-table-column>
+      <el-table-column align="center" label="工号" sortable prop="id" width="80">
         <template slot-scope="scope">{{ scope.row.tid }}</template>
       </el-table-column>
       <el-table-column label="姓名" width="80" align="center">
@@ -103,9 +109,20 @@
         </template>
       </el-table-column>
     </el-table>
-    <div style="margin-top: 20px">
-      <el-button>切换第二、第三行的选中状态</el-button>
-      <el-button >取消选择</el-button>
+    <div class="block">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage4"
+        :page-sizes="[10, 20, 50, 100]"
+        :page-size="10"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="400">
+      </el-pagination>
+    </div>
+    <div style="margin-top: 20px; padding-left:10px">
+      <i class="el-icon-refresh  opera" title="刷新" @click="refresh"></i>
+      <i class="el-icon-plus  opera" title="添加记录" @click="AddTeacherRow"></i>
     </div>
   </div>
 </template>
@@ -126,15 +143,17 @@ export default {
   },
   data() {
     return {
-      list: null,
-      listLoading: true,
-      formInline: {
+      list: null,  // 返回数据列表
+      listLoading: true, // 加载中
+      formInline: {  // 搜索条件，value
         user: '',
         region: ''
-      }
+      },
+      currentPage4: 1  // 分页，当前页数
     };
   },
   created() {
+    // 初始化列表
     this.fetchData();
   },
   methods: {
@@ -157,51 +176,77 @@ export default {
     SearchHandle() {
      this.fetchData();
     },
+    // 刷新
+    refresh() {
+      this.fetchData();
+    },
+    // 添加新纪录
+    AddTeacherRow() {
+      this.$router.push('/teacher/TeacherAdd')
+    },
     // 编辑按钮
     handleEdit(row) {
       console.log(index, row);
     },
     // 删除按钮
     handleDelete(row) {
-       this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-            console.log(1111)
-            TeacherDelete(row._id).then(res => {
-            // console.log(res)
-            if(res.code===1){
-              this.$message({
-              type: 'success',
-              message: '删除成功!'
-              });
-              this.fetchData()
-            }else{
-              this.$message({
-              type: 'info',
-              message: '删除失败!'
-              });
-            }
-          })
-        }).catch(() => {
-          this.$message({
+      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+          console.log(1111)
+          TeacherDelete(row._id).then(res => {
+          // console.log(res)
+          if(res.code===1){
+            this.$message({
+            type: 'success',
+            message: '删除成功!'
+            });
+            this.fetchData()
+          }else{
+            this.$message({
             type: 'info',
-            message: '已取消删除'
-          });
+            message: '删除失败!'
+            });
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
         });
-     /*  console.log(row);
-      TeacherDelete(row._id).then(res => {
-        console.log(res)
-      })
- */
-    }
-  }
+      });
+    },
+    // 全选
+    handleSelectionChange(val) {
+      console.log(val)
+      // this.multipleSelection = val;
+    },
+    // 分页
+    handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+      }
+  },
 };
 </script>
 <style scoped>
-.el-form-item__content {
-    line-height: 36px;
+.app-container{
+  border-bottom: 1px solid #cecece
+}
+.opera{
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin: 2px
+}
+.opera:hover{
+  color: #409EFF;
+  background: #ecf5ff;
+  border-color: #b3d8ff;
 }
 </style>
 

@@ -58,7 +58,7 @@ export const constantRoutes = [
   {
     path: '/teacher',
     component: Layout,
-    redirect: '/teacher/list',
+    redirect: '/teacher/TeacherList',
     name: 'Teacher',
     meta: { title: '教师基本信息', icon: 'user' },
     children: [
