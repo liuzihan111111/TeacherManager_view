@@ -20,3 +20,18 @@ export function TeacherDelete(id) {
     method: 'delete'
   })
 }
+
+/**
+ *添加教师信息
+    params {}
+ */
+export function TeacherAdd(params) {
+  return request.post('/api/v1/teacherAdd', params)
+}
+
+/**
+ * 修改教师信息
+ */
+export function TeacherModify(id, params) {
+  return request.post(`/api/v1/teacherMod/${id}`, params)
+}

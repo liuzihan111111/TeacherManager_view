@@ -72,20 +72,41 @@ export const constantRoutes = [
         path: 'TeacherAdd',
         name: 'TeacherAdd',
         component: () => import('@/views/teacher/add'),
-        meta: { title: '教师信息增加', icon: 'tree' }
+        meta: { title: '教师信息增加', icon: 'form' }
+      },
+      {
+        path: 'TeacherMotify',
+        name: 'TeacherMotify',
+        component: () => import('@/views/teacher/modify'),
+        hidden: true
       }
     ]
   },
 
   {
-    path: '/form',
+    path: '/schedule',
     component: Layout,
+    redirect: '/schedule/ScheduleList',
+    name: 'Schedule',
+    meta: { title: '排课信息', icon: 'user' },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        path: 'ScheduleList',
+        name: 'ScheduleList',
+        component: () => import('@/views/schedule/index'),
+        meta: { title: '排课信息列表', icon: 'table' }
+      },
+      {
+        path: 'ScheduleAdd',
+        name: 'ScheduleAdd',
+        component: () => import('@/views/schedule/classAdd'),
+        meta: { title: '新增排课信息', icon: 'form' }
+      },
+      {
+        path: 'ScheduleMotify',
+        name: 'ScheduleMotify',
+        component: () => import('@/views/schedule/modify'),
+        hidden: true
       }
     ]
   },

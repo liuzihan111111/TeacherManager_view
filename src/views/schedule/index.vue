@@ -3,11 +3,11 @@
     <el-form class="demo-form-inline" :inline="true" :model="formInline" size="mini">
       <el-form-item label>
         <el-select placeholder="查询类别" v-model="formInline.region">
-          <el-option label="工号" value="tid"></el-option>
-          <el-option label="姓名" value="tname"></el-option>
-          <el-option label="学历" value="edu"></el-option>
-          <el-option label="院系" value="major_name"></el-option>
-          <el-option label="职称" value="duty"></el-option>
+          <el-option label="授课教师工号" value="tid"></el-option>
+          <el-option label="授课老师" value="tname"></el-option>
+          <el-option label="课程名" value="cname"></el-option>
+          <el-option label="上课地点" value="ClassPlace"></el-option>
+          <el-option label="上课班级" value="Student"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label>
@@ -30,69 +30,35 @@
       :default-sort="{prop: 'id', order: 'undescending'}"
       @selection-change="handleSelectionChange"
     >
-      >
       <el-table-column type="selection" align="center" width="55" fixed></el-table-column>
-      <el-table-column align="center" label="工号" sortable prop="id" width="80">
-        <template slot-scope="scope">{{ scope.row.tid }}</template>
+      <el-table-column align="center" label="课程名" sortable prop="id" width="120">
+        <template slot-scope="scope">{{ scope.row.cname }}</template>
       </el-table-column>
-      <el-table-column label="姓名" width="80" align="center">
-        <template slot-scope="scope">{{ scope.row.tname}}</template>
+      <el-table-column label="教师工号" width="120" align="center">
+        <template slot-scope="scope">{{ scope.row.tid}}</template>
       </el-table-column>
-      <el-table-column label="性别" align="center" width="80">
+      <el-table-column label="授课老师" align="center" width="120">
         <template slot-scope="scope">
-          <span>{{ scope.row.sex }}</span>
+          <span>{{ scope.row.tname }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="出生日期"
-        align="center"
-        sortable
-        prop="date"
-        width="120"
-        show-overflow-tooltip
-      >
-        <template slot-scope="scope">{{ scope.row.birth }}</template>
+      <el-table-column label="上课时间" align="center" width="140">
+        <template slot-scope="scope">
+          <span>{{ scope.row.ClassTime }}</span>
+        </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="婚姻状态" align="center" width="100">
-        <template slot-scope="scope">{{ scope.row.marriage }}</template>
+      <el-table-column label="上课地点" align="center" width="120">
+        <template slot-scope="scope">
+          <span>{{ scope.row.ClassPlace }}</span>
+        </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="政治面貌" width="100">
-        <template slot-scope="scope">{{ scope.row.polity }}</template>
+      <el-table-column align="center" prop="created_at" label="总课时" width="120">
+        <template slot-scope="scope">{{ scope.row.ClassHour }}</template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="学历" width="80">
-        <template slot-scope="scope">{{ scope.row.edu }}</template>
+      <el-table-column align="center" prop="created_at" label="上课班级" width="140">
+        <template slot-scope="scope">{{ scope.row.Student }}</template>
       </el-table-column>
-      <el-table-column align="center" label="职称" width="80" sortable prop="duty">
-        <template slot-scope="scope">{{ scope.row.duty }}</template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="电话" width="120">
-        <template slot-scope="scope">{{ scope.row.tel }}</template>
-      </el-table-column>
-      <el-table-column
-        align="center"
-        prop="created_at"
-        label="住址"
-        width="120"
-        show-overflow-tooltip
-      >
-        <template slot-scope="scope">{{ scope.row.address }}</template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="密码" width="100">
-        <template slot-scope="scope">{{ scope.row.tpwd }}</template>
-      </el-table-column>
-      <el-table-column align="center" prop="date" label="所属院系" width="100">
-        <template slot-scope="scope">{{ scope.row.major_name }}</template>
-      </el-table-column>
-      <el-table-column
-        align="center"
-        prop="created_at"
-        label="备注"
-        show-overflow-tooltip
-        width="100"
-      >
-        <template slot-scope="scope">{{ scope.row.remark }}</template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="操作" width="140" fixed="right">
+      <el-table-column align="center" prop="created_at" label="操作" width="150" fixed="right">
         <template slot-scope="scope">
           <el-button
             icon="el-icon-edit"
@@ -126,7 +92,7 @@
 </template>
 
 <script>
-import { TeacherList, TeacherDelete } from "@/api/teacher";
+import { ScheduleList, ScheduleDelete } from "@/api/schedule";
 
 export default {
   filters: {
@@ -167,9 +133,10 @@ export default {
       data[title] = content;
       data.page = this.currentPage;
       data.per = this.per;
-      // 调用教师列表
-      TeacherList(data).then(response => {
-        // console.log(response);
+      console.log(data);
+      // 调用排课信息列表
+      ScheduleList(data).then(response => {
+        console.log(response);
         this.list = response.info;
         this.listLoading = false;
       });
@@ -180,13 +147,13 @@ export default {
     },
     // 添加新纪录
     AddTeacherRow() {
-      this.$router.push("/teacher/TeacherAdd");
+      this.$router.push("/schedule/ScheduleAdd");
     },
     // 编辑按钮
     handleEdit(row) {
       console.log(row);
       // 跳转到修改页面
-      this.$router.push({ name: "TeacherMotify", params: row });
+      this.$router.push({ name: "ScheduleMotify", params: row });
     },
     // 删除按钮
     handleDelete(row) {
@@ -196,8 +163,8 @@ export default {
         type: "warning"
       })
         .then(() => {
-          console.log(1111);
-          TeacherDelete(row._id).then(res => {
+          // console.log(1111);
+          ScheduleDelete(row._id).then(res => {
             // console.log(res)
             if (res.code === 1) {
               this.$message({
