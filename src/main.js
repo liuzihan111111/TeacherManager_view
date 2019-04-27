@@ -10,7 +10,7 @@ import '@/styles/index.scss' // global css
 
 import App from './App'
 import store from './store'
-import router from './router'
+import router, { adminRouterMap, teacherRouterMap } from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
@@ -28,6 +28,19 @@ import '@/permission' // permission control
 Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
+
+var routes = router.options.routes
+const role = localStorage.getItem('role')
+if (role === '0') {
+  routes = [...routes, ...adminRouterMap]
+  store.commit('initRoutes', routes)
+  router.addRoutes(adminRouterMap)
+}
+if (role === '1') {
+  routes = [...routes, ...teacherRouterMap]
+  store.commit('initRoutes', routes)
+  router.addRoutes(teacherRouterMap)
+}
 
 new Vue({
   el: '#app',

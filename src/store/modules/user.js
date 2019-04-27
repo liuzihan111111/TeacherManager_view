@@ -6,7 +6,8 @@ import { resetRouter } from '@/router'
 const state = {
   token: getToken(),
   name: '',
-  avatar: ''
+  avatar: '',
+  roles: [] // 存放不同的角色
 }
 
 const mutations = {
@@ -18,6 +19,10 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  // 登录时 角色判断
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
   }
 }
 
@@ -33,7 +38,8 @@ const actions = {
         if (data.code === 1) {
           commit('SET_TOKEN', data.mess.username)
           setToken(data.mess.username)
-          resolve()
+          localStorage.setItem('role', data.type) // 将登陆用户的类型保存下来
+          resolve(data) // 登陆成功后 传值
         } else {
           reject('登录失败！')
         }

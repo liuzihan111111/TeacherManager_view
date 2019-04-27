@@ -8,6 +8,14 @@ import user from './modules/user'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
+  state: {
+    routes: []
+  },
+  mutations: {
+    initRoutes(state, routes) {
+      state.routes = routes
+    }
+  },
   modules: {
     app,
     settings,

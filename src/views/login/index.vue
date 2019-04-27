@@ -64,6 +64,7 @@
 
 <script>
 import { validUsername } from "@/utils/validate";
+import { teacherRouterMap, adminRouterMap } from "@/router";
 
 export default {
   name: "Login",
@@ -78,7 +79,7 @@ export default {
       } */
     };
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 2) {
+      if (value.length < 5) {
         callback(new Error("The password can not be less than 6 digits"));
       } else {
         callback();
@@ -122,16 +123,31 @@ export default {
       });
     },
     handleLogin() {
+      // $refs获取页面中所有的设置了ref属性的标签
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
           this.$store
             .dispatch("user/login", this.loginForm)
-            .then(() => {
+            .then(rr => {
+              console.log(rr);
+              var routes = this.$router.options.routes;
+              if (rr.type == 0) {
+                routes = [...routes, ...adminRouterMap];
+                this.$store.commit("initRoutes", routes);
+                this.$router.addRoutes(adminRouterMap);
+              }
+              if (rr.type == 1) {
+                routes = [...routes, ...teacherRouterMap];
+                this.$store.commit("initRoutes", routes);
+                this.$router.addRoutes(teacherRouterMap);
+              }
+
               this.$router.push({ path: this.redirect || "/" });
               this.loading = false;
             })
-            .catch(() => {
+            .catch(msg => {
+              console.log(msg);
               this.loading = false;
             });
         } else {
