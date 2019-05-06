@@ -100,6 +100,7 @@
             circle
             size="mini"
             @click="handleEdit(scope.row)"
+            title="修改记录"
           ></el-button>
           <el-button
             size="mini"
@@ -107,6 +108,7 @@
             circle
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+            title="删除记录"
           ></el-button>
         </template>
       </el-table-column>
@@ -190,11 +192,15 @@ export default {
     },
     // 删除按钮
     handleDelete(row) {
-      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
+      this.$confirm(
+        "此操作将永久删除与该工号所有相关的信息（薪资、排课等）, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      )
         .then(() => {
           console.log(1111);
           TeacherDelete(row._id).then(res => {

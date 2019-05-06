@@ -90,7 +90,7 @@ export const adminRouterMap = [
         path: 'TeacherAdd',
         name: 'TeacherAdd',
         component: () => import('@/views/teacher/add'),
-        meta: { title: '教师信息增加', icon: 'form' }
+        meta: { title: '教师信息增加', icon: 'edit' }
       },
       {
         path: 'TeacherMotify',
@@ -106,7 +106,7 @@ export const adminRouterMap = [
     component: Layout,
     redirect: '/schedule/ScheduleList',
     name: 'Schedule',
-    meta: { title: '排课信息', icon: 'user' },
+    meta: { title: '排课信息', icon: 'tab' },
     children: [
       {
         path: 'ScheduleList',
@@ -118,7 +118,7 @@ export const adminRouterMap = [
         path: 'ScheduleAdd',
         name: 'ScheduleAdd',
         component: () => import('@/views/schedule/classAdd'),
-        meta: { title: '新增排课信息', icon: 'form' }
+        meta: { title: '新增排课信息', icon: 'edit' }
       },
       {
         path: 'ScheduleMotify',
@@ -127,7 +127,35 @@ export const adminRouterMap = [
         hidden: true
       }
     ]
-  }
+  },
+
+  {
+    path: '/salary',
+    component: Layout,
+    redirect: '/salary/SalaryList',
+    name: 'Salary',
+    meta: { title: '薪酬信息', icon: 'money' },
+    children: [
+      {
+        path: 'SalaryList',
+        name: 'SalaryList',
+        component: () => import('@/views/salary/index'),
+        meta: { title: '薪资列表', icon: 'table' }
+      },
+      {
+        path: 'SalaryLAdd',
+        name: 'SalaryLAdd',
+        component: () => import('@/views/salary/add'),
+        meta: { title: '新增薪资信息', icon: 'edit' }
+      },
+      {
+        path: 'SalaryMotify',
+        name: 'SalaryMotify',
+        component: () => import('@/views/salary/modify'),
+        hidden: true
+      }
+    ]
+  },
 ]
 
 export const teacherRouterMap = [

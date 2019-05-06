@@ -9,7 +9,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">高校教师信息管理系统</h3>
       </div>
 
       <el-form-item prop="username">
@@ -54,10 +54,10 @@
         @click.native.prevent="handleLogin"
       >Login</el-button>
 
-      <div class="tips">
+     {/* <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
         <span>password: any</span>
-      </div>
+      </div>*/}
     </el-form>
   </div>
 </template>
@@ -71,7 +71,7 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       callback();
-      /* if (!
+     /* if (!
       validUsername(value)) {
         callback(new Error('Please enter the correct user name'))
       } else {
@@ -79,8 +79,8 @@ export default {
       } */
     };
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error("The password can not be less than 6 digits"));
+      if (value.length < 4) {
+        callback(new Error("密码长度不能小于5"));
       } else {
         callback();
       }
