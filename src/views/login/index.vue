@@ -185,7 +185,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" >
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
@@ -272,6 +272,9 @@ $cursor: #000;
   width: 100%;
   background: url(../../img/index_bg.png) no-repeat;
   position: relative;
+  .el-input__inner {
+    border: 1px solid #fff !important;
+  }
 }
 .footer {
   font-size: 12px;
@@ -295,9 +298,6 @@ p {
 strong,
 b {
   font-weight: bold;
-}
-.el-input__inner {
-  border: 1px solid #fff !important;
 }
 .login_hint {
   padding-bottom: 20px;

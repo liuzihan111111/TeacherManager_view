@@ -156,6 +156,33 @@ export const adminRouterMap = [
       }
     ]
   },
+  {
+    path: '/project',
+    component: Layout,
+    redirect: '/project/ProjectList',
+    name: 'Project',
+    meta: { title: '项目管理', icon: 'clipboard' },
+    children: [
+      {
+        path: 'ProjectList',
+        name: 'ProjectList',
+        component: () => import('@/views/project/index'),
+        meta: { title: '项目列表', icon: 'clipboard' }
+      }
+      /*  {
+         path: 'SalaryLAdd',
+         name: 'SalaryLAdd',
+         component: () => import('@/views/salary/add'),
+         meta: { title: '新增薪资信息', icon: 'edit' }
+       },
+       {
+         path: 'SalaryMotify',
+         name: 'SalaryMotify',
+         component: () => import('@/views/salary/modify'),
+         hidden: true
+       } */
+    ]
+  }
 ]
 
 export const teacherRouterMap = [
