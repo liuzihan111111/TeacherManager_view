@@ -167,20 +167,20 @@ export const adminRouterMap = [
         path: 'ProjectList',
         name: 'ProjectList',
         component: () => import('@/views/project/index'),
-        meta: { title: '项目列表', icon: 'clipboard' }
-      }
+        meta: { title: '项目管理', icon: 'clipboard' }
+      },
       /*  {
          path: 'SalaryLAdd',
          name: 'SalaryLAdd',
          component: () => import('@/views/salary/add'),
          meta: { title: '新增薪资信息', icon: 'edit' }
-       },
-       {
-         path: 'SalaryMotify',
-         name: 'SalaryMotify',
-         component: () => import('@/views/salary/modify'),
-         hidden: true
-       } */
+       },*/
+      {
+        path: 'ProjectMotify',
+        name: 'ProjectMotify',
+        component: () => import('@/views/project/motify'),
+        hidden: true
+      }
     ]
   }
 ]
