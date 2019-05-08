@@ -256,7 +256,7 @@ export const teacherRouterMap = [
     path: '/Myproject',
     component: Layout,
     redirect: '/Myproject/MyProjectList',
-    name: 'Project',
+    name: 'MyProject',
     meta: { title: '项目管理', icon: 'clipboard' },
     children: [
       {

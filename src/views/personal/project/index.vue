@@ -1,19 +1,7 @@
 <template>
   <div class="app-container">
     <el-form class="demo-form-inline" :inline="true" :model="formInline" size="mini">
-      <!--  <el-form-item label>
-        <el-select placeholder="查询类别" v-model="formInline.region">
-          <el-option label="工号" value="tid"></el-option>
-          <el-option label="项目名" value="subject_title"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label>
-        <el-input placeholder="查询条件" v-model="formInline.user"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" plain icon="el-icon-search" @click="SearchHandle"></el-button>
-      </el-form-item>-->
-      <i class="opera" title="申请项目" @click="AddProjectRow">申请项目</i>
+      <i class="opera" title="添加记录" @click="AddMyProjectRow">添加记录</i>
     </el-form>
     <el-table
       v-loading="listLoading"
@@ -93,25 +81,25 @@
       <el-table-column align="center" prop="created_at" label="操作" width="140" fixed="right">
         <template slot-scope="scope">
           <el-button
-            icon="el-icon-circle-check-outline"
+            icon="el-icon-edit"
             type="primary"
             circle
             size="mini"
             @click="handleEdit(scope.row)"
-            title="审核项目"
+            title="修改项目"
           ></el-button>
-          <el-button
+          <!--  <el-button
             size="mini"
             type="danger"
             circle
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             title="删除记录"
-          ></el-button>
+          ></el-button>-->
         </template>
       </el-table-column>
     </el-table>
-    <div class="block">
+    <!--  <div class="block">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -121,7 +109,7 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="list.allCount"
       ></el-pagination>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -160,59 +148,38 @@ export default {
     // 获取列表信息
     fetchData() {
       this.listLoading = true;
-      // 将查询条件传递过去
       var data = {};
-      data.page = this.currentPage;
-      data.per = this.per;
-      data.tid = localStorage.getItem("id");
+      /*  data.page = this.currentPage;
+      data.per = this.per; */
+      // console.log(data);
       // 调用项目信息列表
-      ProjectList(data).then(response => {
-        // console.log(response);
+      ProjectList({ tid: localStorage.getItem("id") }).then(response => {
+        console.log(response);
         this.list = response.info;
         this.listLoading = false;
       });
     },
+    // 按条件查询
+    SearchHandle() {
+      this.fetchData();
+    },
     // 添加新纪录
-    AddTeacherRow() {
-      this.$router.push("//Myproject/MyProjectAdd");
+    AddMyProjectRow() {
+      this.$router.push("/Myproject/MyProjectAdd");
     },
     // 编辑按钮
     handleEdit(row) {
       console.log(row);
+      if (row.check === 1) {
+        this.$message({
+          type: "warning",
+          message: "审核通过的项目，不能进行修改!!",
+          showClose: true
+        });
+        return;
+      }
       // 跳转到修改页面
       this.$router.push({ name: "MyProjectMotify", params: row });
-    },
-    // 删除按钮
-    handleDelete(row) {
-      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          // console.log(1111);
-          ProjectDelete(row._id).then(res => {
-            // console.log(res)
-            if (res.code === 1) {
-              this.$message({
-                type: "success",
-                message: "删除成功!"
-              });
-              this.fetchData();
-            } else {
-              this.$message({
-                type: "info",
-                message: "删除失败!"
-              });
-            }
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
     },
     // 全选
     handleSelectionChange(val) {
