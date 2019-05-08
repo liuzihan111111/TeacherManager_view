@@ -33,15 +33,21 @@ const actions = {
     return new Promise((resolve, reject) => {
       // 调用登录接口
       Login({ username: username.trim(), password: password }).then(response => {
+        // 获取返回的api数据
         const data = response
         console.log(data)
         if (data.code === 1) {
           commit('SET_TOKEN', data.mess.username)
           setToken(data.mess.username)
+          if (data.type === 1) {
+            localStorage.setItem('id', data.allmess.tid)
+            localStorage.setItem('name', data.allmess.tname)
+          }
           localStorage.setItem('role', data.type) // 将登陆用户的类型保存下来
-          resolve(data) // 登陆成功后 传值
+          resolve(data) // 登陆成功后 将返回信息传递到登录页面   传值
         } else {
-          reject('登录失败！')
+          // 登录不成功返回的信息
+          reject(data.info)
         }
       }).catch(error => {
         reject(error)
@@ -87,6 +93,8 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
+      localStorage.setItem('id', '')
+      localStorage.setItem('name', '')
       commit('SET_TOKEN', '')
       removeToken()
       resetRouter()

@@ -182,10 +182,103 @@ export const adminRouterMap = [
         hidden: true
       }
     ]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/weihu',
+    name: 'System',
+    meta: { title: '系统维护', icon: 'example' },
+    children: [
+      {
+        path: 'weihu',
+        name: 'weihu',
+        component: () => import('@/views/system/weihu'),
+        meta: { title: '系统维护', icon: 'example' }
+      },
+      {
+        path: 'resetPwd',
+        name: 'resetPwd',
+        component: () => import('@/views/system/resetPwd'),
+        meta: { title: '重置密码', icon: 'password' }
+      }
+    ]
   }
 ]
 
 export const teacherRouterMap = [
+  {
+    path: '/personal',
+    component: Layout,
+    redirect: '/personal/base',
+    name: 'Personal',
+    meta: { title: '个人信息', icon: 'people' },
+    children: [
+      {
+        path: 'base',
+        name: 'Base',
+        component: () => import('@/views/personal'),
+        meta: { title: '个人信息', icon: 'people' }
+      }
+    ]
+  },
+  {
+    path: '/myclass',
+    component: Layout,
+    redirect: '/myclass/list',
+    name: 'Class',
+    meta: { title: '排课信息', icon: 'tab' },
+    children: [
+      {
+        path: 'list',
+        name: 'ClassList',
+        component: () => import('@/views/personal/class'),
+        meta: { title: '排课信息', icon: 'tab' }
+      }
+    ]
+  },
+  {
+    path: '/mysalary',
+    component: Layout,
+    redirect: '/mysalary/list',
+    name: 'Mysalary',
+    meta: { title: '工资明细', icon: 'money' },
+    children: [
+      {
+        path: 'list',
+        name: 'MysalaryList',
+        component: () => import('@/views/personal/salary'),
+        meta: { title: '工资明细', icon: 'money' }
+      }
+    ]
+  },
+  {
+    path: '/Myproject',
+    component: Layout,
+    redirect: '/Myproject/MyProjectList',
+    name: 'Project',
+    meta: { title: '项目管理', icon: 'clipboard' },
+    children: [
+      {
+        path: 'MyProjectList',
+        name: 'MyProjectList',
+        component: () => import('@/views/personal/project'),
+        meta: { title: '项目列表', icon: 'clipboard' }
+      },
+      {
+        path: 'MyProjectAdd',
+        name: 'MyProjectAdd',
+        component: () => import('@/views/personal/project/add'),
+        meta: { title: '申请项目', icon: 'edit' }
+      },
+      {
+        path: 'MyProjectMotify',
+        name: 'MyProjectMotify',
+        component: () => import('@/views/personal/project/motify'),
+        hidden: true
+      }
+    ]
+  },
   {
     path: '/nested',
     component: Layout,

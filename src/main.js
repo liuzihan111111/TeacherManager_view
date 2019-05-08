@@ -28,7 +28,7 @@ import '@/permission' // permission control
 Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
-
+// 登录后角色判读
 var routes = router.options.routes
 const role = localStorage.getItem('role')
 if (role === '0') {

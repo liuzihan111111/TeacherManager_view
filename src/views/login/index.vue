@@ -150,12 +150,14 @@ export default {
     handleLogin() {
       // $refs获取页面中所有的设置了ref属性的标签
       this.$refs.loginForm.validate(valid => {
+        // console.log(valid);
         if (valid) {
           this.loading = true;
           this.$store
             .dispatch("user/login", this.loginForm)
             .then(rr => {
-              console.log(rr);
+              // rr 获取返回的数据，判断登录用户的类型
+              // console.log(rr);
               var routes = this.$router.options.routes;
               if (rr.type == 0) {
                 routes = [...routes, ...adminRouterMap];
@@ -172,10 +174,11 @@ export default {
               this.loading = false;
             })
             .catch(msg => {
-              console.log(msg);
+              this.$message.error(msg);
               this.loading = false;
             });
         } else {
+          this.$message.error("error submit!!!!");
           console.log("error submit!!");
           return false;
         }

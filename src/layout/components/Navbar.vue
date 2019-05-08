@@ -7,10 +7,13 @@
     />
 
     <breadcrumb class="breadcrumb-container"/>
-
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
+        <span v-if="id" class="title">
+          {{id}}[{{name}}]
+          <i class="el-icon-caret-bottom"/>
+        </span>
+        <div class="avatar-wrapper" v-else>
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
           <i class="el-icon-caret-bottom"/>
         </div>
@@ -39,6 +42,12 @@ import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 
 export default {
+  data() {
+    return {
+      id: localStorage.getItem("id"),
+      name: localStorage.getItem("name")
+    };
+  },
   components: {
     Breadcrumb,
     Hamburger
@@ -83,7 +92,6 @@ export default {
   .breadcrumb-container {
     float: left;
   }
-
   .right-menu {
     float: right;
     height: 100%;
@@ -113,10 +121,17 @@ export default {
 
     .avatar-container {
       margin-right: 30px;
+      .title {
+        cursor: pointer;
+        &:hover {
+          color: rgb(64, 158, 255);
+        }
+      }
 
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
+        height: 40px;
 
         .user-avatar {
           cursor: pointer;

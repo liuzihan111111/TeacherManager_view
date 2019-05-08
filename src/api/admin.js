@@ -9,7 +9,7 @@ import request from '@/utils/request'
  * password
  */
 export function Login(data) {
-  console.log(data)
+  // console.log(data)
   return request({
     url: '/api/v1//admin_login',
     method: 'post',
