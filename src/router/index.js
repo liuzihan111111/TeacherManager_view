@@ -106,19 +106,19 @@ export const adminRouterMap = [
     component: Layout,
     redirect: '/schedule/ScheduleList',
     name: 'Schedule',
-    meta: { title: '排课信息', icon: 'tab' },
+    meta: { title: '授课记录管理', icon: 'tab' },
     children: [
       {
         path: 'ScheduleList',
         name: 'ScheduleList',
         component: () => import('@/views/schedule/index'),
-        meta: { title: '排课信息列表', icon: 'table' }
+        meta: { title: '授课信息列表', icon: 'table' }
       },
       {
         path: 'ScheduleAdd',
         name: 'ScheduleAdd',
         component: () => import('@/views/schedule/classAdd'),
-        meta: { title: '新增排课信息', icon: 'edit' }
+        meta: { title: '授课信息录入', icon: 'edit' }
       },
       {
         path: 'ScheduleMotify',
@@ -134,19 +134,19 @@ export const adminRouterMap = [
     component: Layout,
     redirect: '/salary/SalaryList',
     name: 'Salary',
-    meta: { title: '薪酬信息', icon: 'money' },
+    meta: { title: '薪酬信息管理', icon: 'money' },
     children: [
       {
         path: 'SalaryList',
         name: 'SalaryList',
         component: () => import('@/views/salary/index'),
-        meta: { title: '薪资列表', icon: 'table' }
+        meta: { title: '薪资信息列表', icon: 'table' }
       },
       {
         path: 'SalaryLAdd',
         name: 'SalaryLAdd',
         component: () => import('@/views/salary/add'),
-        meta: { title: '新增薪资信息', icon: 'edit' }
+        meta: { title: '薪资信息录入', icon: 'edit' }
       },
       {
         path: 'SalaryMotify',
@@ -161,20 +161,14 @@ export const adminRouterMap = [
     component: Layout,
     redirect: '/project/ProjectList',
     name: 'Project',
-    meta: { title: '项目管理', icon: 'clipboard' },
+    meta: { title: '科研成果管理', icon: 'clipboard' },
     children: [
       {
         path: 'ProjectList',
         name: 'ProjectList',
         component: () => import('@/views/project/index'),
-        meta: { title: '项目管理', icon: 'clipboard' }
+        meta: { title: '科研成果管理', icon: 'clipboard' }
       },
-      /*  {
-         path: 'SalaryLAdd',
-         name: 'SalaryLAdd',
-         component: () => import('@/views/salary/add'),
-         meta: { title: '新增薪资信息', icon: 'edit' }
-       },*/
       {
         path: 'ProjectMotify',
         name: 'ProjectMotify',
@@ -184,18 +178,61 @@ export const adminRouterMap = [
     ]
   },
   {
+    path: '/departments',
+    component: Layout,
+    redirect: '/departments/list',
+    name: 'Departments',
+    meta: { title: '院系管理', icon: 'example' },
+    /*  hidden: true, */
+    children: [
+      {
+        path: 'list',
+        name: 'DepartmentsList',
+        component: () => import('@/views/departments'),
+        meta: { title: '院系信息列表', icon: 'table' }
+      },
+      {
+        path: 'add',
+        name: 'DepartmentsAdd',
+        component: () => import('@/views/departments/add'),
+        meta: { title: '添加院系信息', icon: 'edit' }
+      },
+      {
+        path: 'motify',
+        name: 'DepartmentsMotify',
+        component: () => import('@/views/departments/motify'),
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/admin',
+    component: Layout,
+    redirect: '/admin/list',
+    name: 'Admin',
+    meta: { title: '院级管理员管理', icon: 'peoples' },
+    children: [
+      {
+        path: 'list',
+        name: 'AdminList',
+        component: () => import('@/views/admin'),
+        meta: { title: '院级管理员管理', icon: 'peoples' }
+      }
+    ]
+  },
+  {
     path: '/system',
     component: Layout,
     redirect: '/system/weihu',
     name: 'System',
-    meta: { title: '系统维护', icon: 'example' },
+    meta: { title: '重置密码', icon: 'password' },
     children: [
-      {
+      /* {
         path: 'weihu',
         name: 'weihu',
         component: () => import('@/views/system/weihu'),
         meta: { title: '系统维护', icon: 'example' }
-      },
+      }, */
       {
         path: 'resetPwd',
         name: 'resetPwd',
@@ -212,13 +249,13 @@ export const teacherRouterMap = [
     component: Layout,
     redirect: '/personal/base',
     name: 'Personal',
-    meta: { title: '个人信息', icon: 'people' },
+    meta: { title: '个人基本信息', icon: 'people' },
     children: [
       {
         path: 'base',
         name: 'Base',
         component: () => import('@/views/personal'),
-        meta: { title: '个人信息', icon: 'people' }
+        meta: { title: '个人基本信息', icon: 'people' }
       }
     ]
   },
@@ -227,13 +264,13 @@ export const teacherRouterMap = [
     component: Layout,
     redirect: '/myclass/list',
     name: 'Class',
-    meta: { title: '排课信息', icon: 'tab' },
+    meta: { title: '授课记录信息', icon: 'tab' },
     children: [
       {
         path: 'list',
         name: 'ClassList',
         component: () => import('@/views/personal/class'),
-        meta: { title: '排课信息', icon: 'tab' }
+        meta: { title: '授课记录信息', icon: 'tab' }
       }
     ]
   },
@@ -257,13 +294,13 @@ export const teacherRouterMap = [
     component: Layout,
     redirect: '/Myproject/MyProjectList',
     name: 'MyProject',
-    meta: { title: '项目管理', icon: 'clipboard' },
+    meta: { title: '科研成果', icon: 'clipboard' },
     children: [
       {
         path: 'MyProjectList',
         name: 'MyProjectList',
         component: () => import('@/views/personal/project'),
-        meta: { title: '项目列表', icon: 'clipboard' }
+        meta: { title: '科研列表', icon: 'clipboard' }
       },
       {
         path: 'MyProjectAdd',

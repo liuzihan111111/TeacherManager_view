@@ -2,21 +2,13 @@
   <div class="app-container">
     <el-form class="demo-form-inline" :inline="true" :model="formInline" size="mini">
       <el-form-item label>
-        <el-select placeholder="查询类别" v-model="formInline.region">
-          <el-option label="工号" value="tid"></el-option>
-          <el-option label="姓名" value="tname"></el-option>
-          <el-option label="学历" value="edu"></el-option>
-          <el-option label="院系" value="major_name"></el-option>
-          <el-option label="职称" value="duty"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label>
-        <el-input placeholder="查询条件" v-model="formInline.user"></el-input>
+        <el-input placeholder="学院名" v-model="formInline.user"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" plain icon="el-icon-search" @click="SearchHandle"></el-button>
       </el-form-item>
-      <i class="opera" title="添加记录" @click="AddTeacherRow">添加记录</i>
+      <i class="opera" title="刷新列表" @click="Refresh">刷新</i>
+      <i class="opera" title="添加新记录" @click="AddSalaryRow">添加</i>
     </el-form>
     <el-table
       v-loading="listLoading"
@@ -32,65 +24,11 @@
     >
       >
       <el-table-column type="selection" align="center" width="55" fixed></el-table-column>
-      <el-table-column align="center" label="工号" sortable prop="id" width="80">
-        <template slot-scope="scope">{{ scope.row.tid }}</template>
-      </el-table-column>
-      <el-table-column label="姓名" width="80" align="center">
-        <template slot-scope="scope">{{ scope.row.tname}}</template>
-      </el-table-column>
-      <el-table-column label="性别" align="center" width="80">
-        <template slot-scope="scope">
-          <span>{{ scope.row.sex }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="出生日期"
-        align="center"
-        sortable
-        prop="date"
-        width="120"
-        show-overflow-tooltip
-      >
-        <template slot-scope="scope">{{ scope.row.birth }}</template>
-      </el-table-column>
-      <el-table-column class-name="status-col" label="婚姻状态" align="center" width="100">
-        <template slot-scope="scope">{{ scope.row.marriage }}</template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="政治面貌" width="100">
-        <template slot-scope="scope">{{ scope.row.polity }}</template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="最高学历" width="100">
-        <template slot-scope="scope">{{ scope.row.edu }}</template>
-      </el-table-column>
-      <el-table-column align="center" label="职称" width="80" sortable prop="duty">
-        <template slot-scope="scope">{{ scope.row.duty }}</template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="电话" width="120">
-        <template slot-scope="scope">{{ scope.row.tel }}</template>
-      </el-table-column>
-      <el-table-column
-        align="center"
-        prop="created_at"
-        label="住址"
-        width="120"
-        show-overflow-tooltip
-      >
-        <template slot-scope="scope">{{ scope.row.address }}</template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="密码" width="100">
-        <template slot-scope="scope">{{ scope.row.tpwd }}</template>
-      </el-table-column>
-      <el-table-column align="center" prop="date" label="所属院系" width="100">
+      <el-table-column align="center" label="学院名" sortable prop="id" width="300">
         <template slot-scope="scope">{{ scope.row.major_name }}</template>
       </el-table-column>
-      <el-table-column
-        align="center"
-        prop="created_at"
-        label="备注"
-        show-overflow-tooltip
-        width="100"
-      >
-        <template slot-scope="scope">{{ scope.row.remark }}</template>
+      <el-table-column label="学院描述" width="600" align="center" show-overflow-tooltip="true">
+        <template slot-scope="scope">{{ scope.row.major_dec}}</template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="操作" width="140" fixed="right">
         <template slot-scope="scope">
@@ -100,7 +38,7 @@
             circle
             size="mini"
             @click="handleEdit(scope.row)"
-            title="修改记录"
+            title="修改学院信息"
           ></el-button>
           <el-button
             size="mini"
@@ -108,7 +46,7 @@
             circle
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            title="删除记录"
+            title="删除学院信息"
           ></el-button>
         </template>
       </el-table-column>
@@ -128,7 +66,7 @@
 </template>
 
 <script>
-import { TeacherList, TeacherDelete } from "@/api/teacher";
+import { DepartmentList, DepartmentDelete } from "@/api/departments";
 
 export default {
   filters: {
@@ -147,7 +85,6 @@ export default {
       listLoading: true, // 加载中
       formInline: {
         // 搜索条件，value
-        user: "",
         region: ""
       },
       currentPage: 1, // 分页，当前页数
@@ -162,15 +99,15 @@ export default {
     // 获取列表信息
     fetchData() {
       this.listLoading = true;
-      const title = this.formInline.region;
+      // const title = this.formInline.region;
       const content = this.formInline.user;
       // 将查询条件传递过去
       var data = {};
-      data[title] = content;
+      data.major_name = content;
       data.page = this.currentPage;
       data.per = this.per;
-      // 调用教师列表
-      TeacherList(data).then(response => {
+      // 调用薪资列表
+      DepartmentList(data).then(response => {
         // console.log(response);
         this.list = response.info;
         this.listLoading = false;
@@ -181,29 +118,24 @@ export default {
       this.fetchData();
     },
     // 添加新纪录
-    AddTeacherRow() {
-      this.$router.push("/teacher/TeacherAdd");
+    AddSalaryRow() {
+      this.$router.push("/departments/add");
     },
     // 编辑按钮
     handleEdit(row) {
       console.log(row);
       // 跳转到修改页面
-      this.$router.push({ name: "TeacherMotify", params: row });
+      this.$router.push({ name: "DepartmentsMotify", params: row });
     },
     // 删除按钮
     handleDelete(row) {
-      this.$confirm(
-        "此操作将永久删除与该工号所有相关的信息（薪资、排课等）, 是否继续?",
-        "提示",
-        {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }
-      )
+      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
         .then(() => {
-          console.log(1111);
-          TeacherDelete(row._id).then(res => {
+          DepartmentDelete(row._id).then(res => {
             // console.log(res)
             if (res.code === 1) {
               this.$message({
@@ -241,6 +173,11 @@ export default {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.fetchData();
+    },
+    // 刷新
+    Refresh() {
+      this.formInline.user = "";
+      this.fetchData();
     }
   }
 };
@@ -267,4 +204,5 @@ export default {
   justify-content: center;
 }
 </style>
+
 
