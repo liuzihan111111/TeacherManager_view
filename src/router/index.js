@@ -249,13 +249,19 @@ export const teacherRouterMap = [
     component: Layout,
     redirect: '/personal/base',
     name: 'Personal',
-    meta: { title: '个人基本信息', icon: 'people' },
+    meta: { title: '个人档案', icon: 'user' },
     children: [
       {
         path: 'base',
         name: 'Base',
-        component: () => import('@/views/personal'),
-        meta: { title: '个人基本信息', icon: 'people' }
+        component: () => import('@/views/personal/people'),
+        meta: { title: '基本信息', icon: 'documentation' }
+      },
+      {
+        path: 'learn',
+        name: 'Learn',
+        component: () => import('@/views/personal/people/learn'),
+        meta: { title: '教育经历', icon: 'tab' }
       }
     ]
   },
@@ -264,13 +270,13 @@ export const teacherRouterMap = [
     component: Layout,
     redirect: '/myclass/list',
     name: 'Class',
-    meta: { title: '授课记录信息', icon: 'tab' },
+    meta: { title: '授课记录', icon: 'tab' },
     children: [
       {
         path: 'list',
         name: 'ClassList',
         component: () => import('@/views/personal/class'),
-        meta: { title: '授课记录信息', icon: 'tab' }
+        meta: { title: '授课记录', icon: 'tab' }
       }
     ]
   },
@@ -306,7 +312,7 @@ export const teacherRouterMap = [
         path: 'MyProjectAdd',
         name: 'MyProjectAdd',
         component: () => import('@/views/personal/project/add'),
-        meta: { title: '申请项目', icon: 'edit' }
+        meta: { title: '科研成果录入', icon: 'edit' }
       },
       {
         path: 'MyProjectMotify',
