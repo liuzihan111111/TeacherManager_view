@@ -78,13 +78,19 @@ export const adminRouterMap = [
     component: Layout,
     redirect: '/teacher/TeacherList',
     name: 'Teacher',
-    meta: { title: '教师基本信息', icon: 'user' },
+    meta: { title: '教师信息管理', icon: 'user' },
     children: [
       {
         path: 'TeacherList',
         name: 'TeacherList',
         component: () => import('@/views/teacher/index'),
         meta: { title: '教师信息列表', icon: 'table' }
+      },
+      {
+        path: 'TeacherGroup',
+        name: 'TeacherGroup',
+        component: () => import('@/views/teacher/count'),
+        meta: { title: '统计与分析', icon: 'tab' }
       },
       {
         path: 'TeacherAdd',

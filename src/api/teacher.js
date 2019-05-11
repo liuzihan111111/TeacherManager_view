@@ -35,3 +35,11 @@ export function TeacherAdd(params) {
 export function TeacherModify(id, params) {
   return request.post(`/api/v1/teacherMod/${id}`, params)
 }
+/**
+ *  分组统计
+ * query:分组条件
+ * params:统计前的查询条件
+ * */
+export function TeacherGroup(query, params) {
+  return request.get(`/api/v1/teacher/group/${query}`, params)
+}
