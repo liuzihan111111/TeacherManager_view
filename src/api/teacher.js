@@ -41,5 +41,9 @@ export function TeacherModify(id, params) {
  * params:统计前的查询条件
  * */
 export function TeacherGroup(query, params) {
-  return request.get(`/api/v1/teacher/group/${query}`, params)
+  return request({
+    url: `/api/v1/teacher/group/${query}`,
+    method: 'get',
+    params: params
+  })
 }
