@@ -5,7 +5,7 @@
         <el-input v-model="form.major_name"/>
       </el-form-item>
       <el-form-item label="学院描述" prop="major_dec">
-        <el-input type="textarea" :rows="6" placeholder="请输入内容" v-model="form.major_dec"/>
+        <el-input type="textarea" :rows="15" placeholder="请输入内容" v-model="form.major_dec"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">添加</el-button>

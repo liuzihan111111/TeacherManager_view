@@ -204,6 +204,12 @@ export const adminRouterMap = [
         meta: { title: '添加院系信息', icon: 'edit' }
       },
       {
+        path: 'change',
+        name: 'DepartmentsChange',
+        component: () => import('@/views/departments/change'),
+        meta: { title: '人员调动', icon: 'documentation' }
+      },
+      {
         path: 'motify',
         name: 'DepartmentsMotify',
         component: () => import('@/views/departments/motify'),
