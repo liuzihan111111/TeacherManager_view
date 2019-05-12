@@ -159,7 +159,9 @@ export default {
       const content = this.formInline.user;
       // 将查询条件传递过去
       var data = {};
-      data[title] = content;
+      if (content) {
+        data[title] = content;
+      }
       data.page = this.currentPage;
       data.per = this.per;
       // 调用教师统计

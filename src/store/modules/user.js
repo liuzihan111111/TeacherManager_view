@@ -7,6 +7,7 @@ const state = {
   token: getToken(),
   name: '',
   avatar: '',
+  major: '',
   roles: [] // 存放不同的角色
 }
 
@@ -23,6 +24,9 @@ const mutations = {
   // 登录时 角色判断
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_MAJOR: (state, major) => {
+    state.major = major
   }
 }
 
@@ -46,6 +50,7 @@ const actions = {
           if (data.type === 2) {
             localStorage.setItem('id', data.allmess.admin_id)
             localStorage.setItem('name', data.allmess.major_name)
+            commit('SET_MAJOR', localStorage.getItem('name'))
           }
           localStorage.setItem('role', data.type) // 将登陆用户的类型保存下来
           resolve(data) // 登陆成功后 将返回信息传递到登录页面   传值
@@ -70,6 +75,7 @@ const actions = {
       // const { name, avatar } = data
 
       commit('SET_NAME', username)
+      commit('SET_MAJOR', localStorage.getItem('name'))
       commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
       resolve(username)
     })
@@ -99,6 +105,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       localStorage.setItem('id', '')
       localStorage.setItem('name', '')
+      commit('SET_MAJOR', '')
       commit('SET_TOKEN', '')
       removeToken()
       resetRouter()

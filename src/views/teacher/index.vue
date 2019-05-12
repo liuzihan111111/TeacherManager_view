@@ -1,12 +1,12 @@
 <template>
-  <div class="app-container">
+  <div id="app" class="app-container">
     <el-form class="demo-form-inline" :inline="true" :model="formInline" size="mini">
       <el-form-item label>
         <el-select placeholder="查询类别" v-model="formInline.region">
           <el-option label="工号" value="tid"></el-option>
           <el-option label="姓名" value="tname"></el-option>
           <el-option label="学历" value="edu"></el-option>
-          <el-option label="院系" value="major_name"></el-option>
+          <el-option label="院系" value="major_name" v-if="!major"></el-option>
           <el-option label="职称" value="duty"></el-option>
         </el-select>
       </el-form-item>
@@ -16,7 +16,7 @@
       <el-form-item>
         <el-button type="primary" plain icon="el-icon-search" @click="SearchHandle"></el-button>
       </el-form-item>
-      <i class="opera" title="添加记录" @click="AddTeacherRow">添加记录</i>
+      <i class="opera" title="新增教师" @click="AddTeacherRow">新增</i>
     </el-form>
     <el-table
       v-loading="listLoading"
@@ -80,7 +80,7 @@
       <el-table-column align="center" prop="created_at" label="密码" width="100">
         <template slot-scope="scope">{{ scope.row.tpwd }}</template>
       </el-table-column>
-      <el-table-column align="center" prop="date" label="所属院系" width="100">
+      <el-table-column align="center" prop="date" label="所属院系" width="100" show-overflow-tooltip>
         <template slot-scope="scope">{{ scope.row.major_name }}</template>
       </el-table-column>
       <el-table-column
@@ -129,8 +129,10 @@
 
 <script>
 import { TeacherList, TeacherDelete } from "@/api/teacher";
-
+import { mapGetters } from "vuex";
+import { stat } from "fs";
 export default {
+  name: "app",
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -143,6 +145,7 @@ export default {
   },
   data() {
     return {
+      // major: null, // 所属院系
       list: null, // 返回数据列表
       listLoading: true, // 加载中
       formInline: {
@@ -154,7 +157,16 @@ export default {
       per: 10 // 每页的条数
     };
   },
+  computed: {
+    ...mapGetters(["major"])
+  },
   created() {
+    // 是否为院级管理员登录
+
+    console.log(this.major);
+    /*if (this.major) {
+      this.major1 = localStorage.getItem("name");
+    } */
     // 初始化列表
     this.fetchData();
   },
@@ -166,6 +178,8 @@ export default {
       const content = this.formInline.user;
       // 将查询条件传递过去
       var data = {};
+      // 院级管理员条件
+      data.major_name = this.major;
       data[title] = content;
       data.page = this.currentPage;
       data.per = this.per;

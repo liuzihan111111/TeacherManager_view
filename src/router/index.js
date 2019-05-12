@@ -187,7 +187,6 @@ export const adminRouterMap = [
     redirect: '/departments/list',
     name: 'Departments',
     meta: { title: '院系管理', icon: 'example' },
-    /*  hidden: true, */
     children: [
       {
         path: 'list',
@@ -331,136 +330,154 @@ export const teacherRouterMap = [
         hidden: true
       }
     ]
-  },
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
   }
 ]
-
+// 院系管理员
 export const majorRouterMap = [
   {
-    path: '/nested',
+    path: '/teacher',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
+    redirect: '/teacher/TeacherList',
+    name: 'Teacher',
+    meta: { title: '教师信息管理', icon: 'user' },
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        path: 'TeacherList',
+        name: 'TeacherList',
+        component: () => import('@/views/teacher/index'),
+        meta: { title: '教师信息列表', icon: 'table' }
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
+        path: 'TeacherGroup',
+        name: 'TeacherGroup',
+        component: () => import('@/views/teacher/count'),
+        meta: { title: '统计与分析', icon: 'tab' }
+      },
+      {
+        path: 'TeacherAdd',
+        name: 'TeacherAdd',
+        component: () => import('@/views/teacher/add'),
+        meta: { title: '教师信息增加', icon: 'edit' }
+      },
+      {
+        path: 'TeacherMotify',
+        name: 'TeacherMotify',
+        component: () => import('@/views/teacher/modify'),
+        hidden: true
       }
     ]
   },
-
+  {
+    path: '/schedule',
+    component: Layout,
+    redirect: '/schedule/ScheduleList',
+    name: 'Schedule',
+    meta: { title: '授课记录管理', icon: 'tab' },
+    children: [
+      {
+        path: 'ScheduleList',
+        name: 'ScheduleList',
+        component: () => import('@/views/schedule/index'),
+        meta: { title: '授课信息列表', icon: 'table' }
+      },
+      {
+        path: 'ScheduleAdd',
+        name: 'ScheduleAdd',
+        component: () => import('@/views/schedule/classAdd'),
+        meta: { title: '授课信息录入', icon: 'edit' }
+      },
+      {
+        path: 'ScheduleMotify',
+        name: 'ScheduleMotify',
+        component: () => import('@/views/schedule/modify'),
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/salary',
+    component: Layout,
+    redirect: '/salary/SalaryList',
+    name: 'Salary',
+    meta: { title: '薪酬信息管理', icon: 'money' },
+    children: [
+      {
+        path: 'SalaryList',
+        name: 'SalaryList',
+        component: () => import('@/views/salary/index'),
+        meta: { title: '薪资信息列表', icon: 'table' }
+      },
+      {
+        path: 'SalaryLAdd',
+        name: 'SalaryLAdd',
+        component: () => import('@/views/salary/add'),
+        meta: { title: '薪资信息录入', icon: 'edit' }
+      },
+      {
+        path: 'SalaryMotify',
+        name: 'SalaryMotify',
+        component: () => import('@/views/salary/modify'),
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/project',
+    component: Layout,
+    redirect: '/project/ProjectList',
+    name: 'Project',
+    meta: { title: '科研成果管理', icon: 'clipboard' },
+    children: [
+      {
+        path: 'ProjectList',
+        name: 'ProjectList',
+        component: () => import('@/views/project/index'),
+        meta: { title: '科研成果管理', icon: 'clipboard' }
+      },
+      {
+        path: 'ProjectMotify',
+        name: 'ProjectMotify',
+        component: () => import('@/views/project/motify'),
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/departments',
+    component: Layout,
+    redirect: '/departments/list',
+    name: 'Departments',
+    meta: { title: '院系管理', icon: 'example' },
+    children: [
+      {
+        path: 'change',
+        name: 'DepartmentsChange',
+        component: () => import('@/views/departments/change'),
+        meta: { title: '人员调动', icon: 'documentation' }
+      }
+    ]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/weihu',
+    name: 'System',
+    meta: { title: '重置密码', icon: 'password' },
+    children: [
+      /* {
+        path: 'weihu',
+        name: 'weihu',
+        component: () => import('@/views/system/weihu'),
+        meta: { title: '系统维护', icon: 'example' }
+      }, */
+      {
+        path: 'resetPwd',
+        name: 'resetPwd',
+        component: () => import('@/views/system/resetPwd'),
+        meta: { title: '重置密码', icon: 'password' }
+      }
+    ]
+  },
   {
     path: 'external-link',
     component: Layout,

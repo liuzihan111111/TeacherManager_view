@@ -55,12 +55,6 @@
       <el-form-item label="家庭住址">
         <el-input v-model="detail.address"/>
       </el-form-item>
-      <el-form-item label="院系">
-        <el-select v-model="detail.major_name" placeholder="请选择。。。">
-          <el-option label="计算机" value="计算机"/>
-          <el-option label="会计" value="会计"/>
-        </el-select>
-      </el-form-item>
       <el-form-item label="备注">
         <el-input v-model="detail.remark" type="textarea"/>
       </el-form-item>
