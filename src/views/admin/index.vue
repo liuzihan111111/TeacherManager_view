@@ -62,6 +62,9 @@
         <el-form-item label="管理员账号" :label-width="formLabelWidth" prop="admin">
           <el-input v-model="form.admin_id" auto-complete="off" style="width: 60%;"></el-input>
         </el-form-item>
+        <el-form-item label="管理员密码" :label-width="formLabelWidth" prop="admin" v-if="IsShow">
+          <el-input v-model="form.admin_pwd" auto-complete="off" style="width: 60%;"></el-input>
+        </el-form-item>
         <el-form-item label="所属院系" :label-width="formLabelWidth">
           <el-select v-model="form.major_name" placeholder="请选择院系" style="width: 60%;">
             <el-option
@@ -75,7 +78,8 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="Addadmin">确 定</el-button>
+        <el-button type="primary" @click="Addadmin" v-if="! IsShow">确 定</el-button>
+        <el-button type="primary" @click="Motifyadmin" v-if="IsShow">保 存</el-button>
       </div>
     </el-dialog>
   </div>
@@ -97,6 +101,7 @@ export default {
   },
   data() {
     return {
+      IsShow: false,
       title: "新增管理员",
       dialogTableVisible: false,
       dialogFormVisible: false,
@@ -112,7 +117,8 @@ export default {
       // per: 10 // 每页的条数
       form: {
         admin_id: "",
-        major_name: ""
+        major_name: "",
+        admin_pwd: ""
       },
       departments: [] // 学院信息
     };
@@ -144,7 +150,9 @@ export default {
     },
     // 添加新纪录
     ShowFrom() {
+      this.title = "新增管理员";
       this.dialogFormVisible = true;
+      this.IsShow = false;
       this.getDepartmentList();
     },
     // 添加管理员信息
@@ -167,8 +175,15 @@ export default {
         return;
       }
       AdminAdd(this.form)
-        .then(res => {
-          console.log(res);
+        .then(req => {
+          if (req.code === 1) {
+            this.$message("添加成功!");
+            this.dialogFormVisible = false;
+            // 初始化列表
+            this.fetchData();
+          } else {
+            this.$message("添加失败!");
+          }
         })
         .catch(err => {
           console.log(err);
@@ -177,9 +192,28 @@ export default {
     },
     // 编辑按钮
     handleEdit(row) {
-      console.log(row);
-      // 跳转到修改页面
-      // this.$router.push({ name: "Motify", params: row });
+      // console.log(row);
+      this.getDepartmentList(); // 获取院系下拉框数据
+      this.form = row;
+      this.dialogFormVisible = true; // 显示弹窗
+      this.IsShow = true;
+      this.title = "修改管理员信息";
+    },
+    Motifyadmin() {
+      console.log(this.form);
+      AdminModify(this.form)
+        .then(req => {
+          // console.log(req);
+          if (req.code === 1) {
+            this.$message("修改成功!");
+            this.dialogFormVisible = false;
+          } else {
+            this.$message("修改失败!");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     // 删除按钮
     handleDelete(row) {
