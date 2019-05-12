@@ -43,6 +43,10 @@ const actions = {
             localStorage.setItem('id', data.allmess.tid)
             localStorage.setItem('name', data.allmess.tname)
           }
+          if (data.type === 2) {
+            localStorage.setItem('id', data.allmess.admin_id)
+            localStorage.setItem('name', data.allmess.major_name)
+          }
           localStorage.setItem('role', data.type) // 将登陆用户的类型保存下来
           resolve(data) // 登陆成功后 将返回信息传递到登录页面   传值
         } else {

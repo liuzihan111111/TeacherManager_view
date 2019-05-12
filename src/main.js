@@ -10,7 +10,7 @@ import '@/styles/index.scss' // global css
 
 import App from './App'
 import store from './store'
-import router, { adminRouterMap, teacherRouterMap } from './router'
+import router, { adminRouterMap, teacherRouterMap, majorRouterMap } from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
@@ -40,6 +40,11 @@ if (role === '1') {
   routes = [...routes, ...teacherRouterMap]
   store.commit('initRoutes', routes)
   router.addRoutes(teacherRouterMap)
+}
+if (role === '2') {
+  routes = [...routes, ...majorRouterMap]
+  store.commit('initRoutes', routes)
+  router.addRoutes(majorRouterMap)
 }
 
 new Vue({

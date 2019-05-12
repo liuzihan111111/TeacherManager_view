@@ -89,7 +89,7 @@
 
 <script>
 import { validUsername } from "@/utils/validate";
-import { teacherRouterMap, adminRouterMap } from "@/router";
+import { teacherRouterMap, adminRouterMap, majorRouterMap } from "@/router";
 
 export default {
   name: "Login",
@@ -168,6 +168,11 @@ export default {
                 routes = [...routes, ...teacherRouterMap];
                 this.$store.commit("initRoutes", routes);
                 this.$router.addRoutes(teacherRouterMap);
+              }
+              if (rr.type == 2) {
+                routes = [...routes, ...majorRouterMap];
+                this.$store.commit("initRoutes", routes);
+                this.$router.addRoutes(majorRouterMap);
               }
 
               this.$router.push({ path: this.redirect || "/" });
