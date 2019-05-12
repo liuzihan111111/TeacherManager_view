@@ -10,17 +10,24 @@
       <el-form-item label="课程名" prop="cname">
         <el-input v-model="detail.cname"/>
       </el-form-item>
-      <el-form-item label="上课时间" prop="ClassTime">
-        <el-input v-model="detail.ClassTime"/>
+      <el-form-item label="总人数" prop="ClassTime">
+        <el-input v-model="detail.Number"/>
       </el-form-item>
-      <el-form-item label="上课地点" prop="ClassPlace">
-        <el-input v-model="detail.ClassPlace"/>
+      <el-form-item label="学历层次" prop="edu">
+        <el-select v-model="detail.type" placeholder="请选择。。。">
+          <el-option label="专科" value="专科"/>
+          <el-option label="本科" value="本科"/>
+          <!-- <el-option label="硕士" value="硕士"/> -->
+        </el-select>
       </el-form-item>
       <el-form-item label="总课时" prop="ClassHour">
         <el-input v-model="detail.ClassHour"/>
       </el-form-item>
       <el-form-item label="上课班级" prop="Student">
         <el-input v-model="detail.Student"/>
+      </el-form-item>
+      <el-form-item label="学年" prop="Student">
+        <el-input v-model="detail.term"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">修改</el-button>

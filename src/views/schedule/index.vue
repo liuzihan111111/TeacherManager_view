@@ -4,10 +4,8 @@
       <el-form-item label>
         <el-select placeholder="查询类别" v-model="formInline.region">
           <el-option label="授课教师工号" value="tid"></el-option>
-          <el-option label="授课老师" value="tname"></el-option>
           <el-option label="课程名" value="cname"></el-option>
-          <el-option label="上课地点" value="ClassPlace"></el-option>
-          <el-option label="上课班级" value="Student"></el-option>
+          <el-option label="学历类别" value="type"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label>
@@ -39,24 +37,33 @@
       </el-table-column>
       <el-table-column label="授课老师" align="center" width="120">
         <template slot-scope="scope">
-          <span>{{ scope.row.tname }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="上课时间" align="center" width="140">
-        <template slot-scope="scope">
-          <span>{{ scope.row.ClassTime }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="上课地点" align="center" width="120">
-        <template slot-scope="scope">
-          <span>{{ scope.row.ClassPlace }}</span>
+          <span>{{ scope.row.t_id.tname }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="总课时" width="120">
         <template slot-scope="scope">{{ scope.row.ClassHour }}</template>
       </el-table-column>
+      <el-table-column label="总人数" align="center" width="140">
+        <template slot-scope="scope">
+          <span>{{ scope.row.Number }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="学历类别" align="center" width="120">
+        <template slot-scope="scope">
+          <span>{{ scope.row.type }}</span>
+        </template>
+      </el-table-column>
       <el-table-column align="center" prop="created_at" label="上课班级" width="140">
         <template slot-scope="scope">{{ scope.row.Student }}</template>
+      </el-table-column>
+      <el-table-column
+        align="center"
+        prop="created_at"
+        label="授课时间"
+        width="140"
+        show-overflow-tooltip="true"
+      >
+        <template slot-scope="scope">{{ scope.row.term }}</template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="操作" width="150" fixed="right">
         <template slot-scope="scope">

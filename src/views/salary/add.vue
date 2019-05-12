@@ -69,12 +69,20 @@ export default {
         .then(res => {
           console.log(res);
           if (res.code === 1) {
-            this.$message("添加成功!");
+            this.$message({
+              showClose: true,
+              message: "添加成功!!",
+              type: "success"
+            });
             this.$refs["form"].resetFields();
           } else if (res.code === 2) {
             this.$message("该工号已经存在!");
           } else {
-            this.$message("添加失败！");
+            this.$message({
+              showClose: true,
+              message: "添加失败!!",
+              type: "error"
+            });
           }
         })
         .catch(err => {
