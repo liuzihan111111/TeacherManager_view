@@ -54,6 +54,16 @@ export const constantRoutes = [
       meta: { title: '首页', icon: 'dashboard' }
     }]
   },
+  {
+    path: '/motifyPwd',
+    component: Layout,
+    redirect: '/motifyPwd/pwd',
+    children: [{
+      path: 'pwd',
+      component: () => import('@/views/motifyPwd')
+    }],
+    hidden: true
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
