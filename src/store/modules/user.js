@@ -52,6 +52,11 @@ const actions = {
             localStorage.setItem('name', data.allmess.major_name)
             commit('SET_MAJOR', localStorage.getItem('name'))
           }
+          if (data.type === 0) {
+            localStorage.setItem('id', '')
+            localStorage.setItem('name', '')
+            commit('SET_MAJOR', '')
+          }
           localStorage.setItem('role', data.type) // 将登陆用户的类型保存下来
           resolve(data) // 登陆成功后 将返回信息传递到登录页面   传值
         } else {
