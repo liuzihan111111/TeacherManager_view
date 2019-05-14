@@ -18,6 +18,7 @@
           <el-option label="职称" value="duty"></el-option>
           <el-option label="婚否" value="marriage"></el-option>
           <el-option label="政治面貌" value="polity"></el-option>
+          <el-option label="性别" value="sex"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>

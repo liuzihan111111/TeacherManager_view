@@ -106,7 +106,7 @@ export const adminRouterMap = [
         path: 'TeacherAdd',
         name: 'TeacherAdd',
         component: () => import('@/views/teacher/add'),
-        meta: { title: '教师信息增加', icon: 'edit' }
+        meta: { title: '教师新增', icon: 'edit' }
       },
       {
         path: 'TeacherMotify',

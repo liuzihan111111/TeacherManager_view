@@ -80,7 +80,8 @@ const actions = {
       // const { name, avatar } = data
 
       commit('SET_NAME', username)
-      if (localStorage.getItem('role') === 2) {
+      // 如果登录的为院系管理员
+      if (localStorage.getItem('role') === '2') {
         commit('SET_MAJOR', localStorage.getItem('name'))
       }
       commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')

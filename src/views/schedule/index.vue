@@ -102,7 +102,7 @@
 
 <script>
 import { ScheduleList, ScheduleDelete } from "@/api/schedule";
-
+import { mapGetters } from "vuex";
 export default {
   filters: {
     statusFilter(status) {
@@ -126,6 +126,9 @@ export default {
       currentPage: 1, // 分页，当前页数
       per: 10 // 每页的条数
     };
+  },
+  computed: {
+    ...mapGetters(["major"])
   },
   created() {
     // 初始化列表

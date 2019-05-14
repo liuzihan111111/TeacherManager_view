@@ -37,6 +37,7 @@
 <script>
 import { ScheduleAdd } from "@/api/schedule";
 import { TeacherList } from "@/api/teacher";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -56,45 +57,50 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapGetters(["major"])
+  },
   methods: {
     onSubmit() {
       // console.log(this.form);
-      TeacherList({ tid: this.form.tid }).then(response => {
-        console.log(response);
-        this.list = response.info.list[0];
-        if (!response.info.allCount) {
-          this.$message({
-            showClose: true,
-            message: "该教师账号不存在!!",
-            type: "error"
-          });
-          return;
-        } else {
-          this.form.t_id = this.list._id;
-          console.log(this.form);
-          ScheduleAdd(this.form)
-            .then(res => {
-              // console.log(res);
-              if (res.code === 1) {
-                this.$message({
-                  showClose: true,
-                  message: "添加成功!!",
-                  type: "success"
-                });
-                this.$refs["form"].resetFields();
-              } else {
-                this.$message({
-                  showClose: true,
-                  message: "添加失败!!",
-                  type: "error"
-                });
-              }
-            })
-            .catch(err => {
-              console.log(err);
+      TeacherList({ tid: this.form.tid, major_name: this.major }).then(
+        response => {
+          console.log(response);
+          this.list = response.info.list[0];
+          if (!response.info.allCount) {
+            this.$message({
+              showClose: true,
+              message: "该账号不存在，或不属于该系!!",
+              type: "error"
             });
+            return;
+          } else {
+            this.form.t_id = this.list._id;
+            console.log(this.form);
+            ScheduleAdd(this.form)
+              .then(res => {
+                // console.log(res);
+                if (res.code === 1) {
+                  this.$message({
+                    showClose: true,
+                    message: "添加成功!!",
+                    type: "success"
+                  });
+                  this.$refs["form"].resetFields();
+                } else {
+                  this.$message({
+                    showClose: true,
+                    message: "添加失败!!",
+                    type: "error"
+                  });
+                }
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
         }
-      });
+      );
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
