@@ -32,7 +32,7 @@
         <template slot-scope="scope">{{ scope.row.tid }}</template>
       </el-table-column>
       <el-table-column label="教师名" width="120" align="center">
-        <template slot-scope="scope">{{ scope.row.tname}}</template>
+        <template slot-scope="scope">{{ scope.row.t_id.tname}}</template>
       </el-table-column>
       <el-table-column label="项目名" align="center" width="120">
         <template slot-scope="scope">
@@ -72,20 +72,11 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="apply_time" label="申请时间" width="120">
+      <el-table-column align="center" prop="apply_time" label="录入时间" width="120">
         <template slot-scope="scope">{{ scope.row.apply_time }}</template>
       </el-table-column>
       <el-table-column align="center" prop="check_time" label="审核时间" width="120">
         <template slot-scope="scope">{{ scope.row.check_time }}</template>
-      </el-table-column>
-      <el-table-column
-        align="center"
-        prop="complete"
-        show-overflow-tooltip
-        label="完成进度"
-        width="120"
-      >
-        <template slot-scope="scope">{{ scope.row.complete }}</template>
       </el-table-column>
       <el-table-column align="center" prop="mark" show-overflow-tooltip label="审核说明" width="120">
         <template slot-scope="scope">{{ scope.row.mark }}</template>
@@ -127,7 +118,7 @@
 
 <script>
 import { ProjectList, ProjectDelete } from "@/api/project";
-
+import { mapGetters } from "vuex";
 export default {
   filters: {
     statusFilter(status) {
@@ -141,7 +132,10 @@ export default {
   },
   data() {
     return {
-      list: null, // 返回数据列表
+      list: {
+        allCount: 0,
+        list: []
+      }, // 返回数据列表
       listLoading: true, // 加载中
       formInline: {
         // 搜索条件，value
@@ -151,6 +145,9 @@ export default {
       currentPage: 1, // 分页，当前页数
       per: 10 // 每页的条数
     };
+  },
+  computed: {
+    ...mapGetters(["major"])
   },
   created() {
     // 初始化列表
@@ -168,12 +165,33 @@ export default {
       data.page = this.currentPage;
       data.per = this.per;
       console.log(data);
-      // 调用项目信息列表
-      ProjectList(data).then(response => {
-        console.log(response);
-        this.list = response.info;
-        this.listLoading = false;
-      });
+      if (this.major) {
+        console.log(this.major);
+        data.major_name = this.major;
+        // 调用薪酬信息列表
+        ProjectList(data).then(response => {
+          console.log(response);
+          var count = 0;
+          response.info.list.forEach(item => {
+            if (item.t_id) {
+              console.log(item);
+              count += 1;
+              this.list.list.push(item);
+            }
+          });
+          this.list.allCount = count;
+          console.log(this.list);
+          this.listLoading = false;
+        });
+        return;
+      } else {
+        // 调用项目信息列表
+        ProjectList(data).then(response => {
+          console.log(response);
+          this.list = response.info;
+          this.listLoading = false;
+        });
+      }
     },
     // 按条件查询
     SearchHandle() {

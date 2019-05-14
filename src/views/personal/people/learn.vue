@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h2>{{name}}</h2>
+    <!--  <h2>{{name}}</h2> -->
     <el-form
       ref="form"
       :model="detail"

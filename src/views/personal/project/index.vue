@@ -20,7 +20,7 @@
         <template slot-scope="scope">{{ scope.row.tid }}</template>
       </el-table-column>
       <el-table-column label="教师名" width="120" align="center">
-        <template slot-scope="scope">{{ scope.row.tname}}</template>
+        <template slot-scope="scope">{{ scope.row.t_id.tname}}</template>
       </el-table-column>
       <el-table-column label="项目名" align="center" width="120">
         <template slot-scope="scope">
@@ -66,15 +66,6 @@
       <el-table-column align="center" prop="check_time" label="审核时间" width="120">
         <template slot-scope="scope">{{ scope.row.check_time }}</template>
       </el-table-column>
-      <el-table-column
-        align="center"
-        prop="complete"
-        show-overflow-tooltip
-        label="完成进度"
-        width="120"
-      >
-        <template slot-scope="scope">{{ scope.row.complete }}</template>
-      </el-table-column>
       <el-table-column align="center" prop="mark" show-overflow-tooltip label="审核说明" width="120">
         <template slot-scope="scope">{{ scope.row.mark }}</template>
       </el-table-column>
@@ -99,7 +90,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <!--  <div class="block">
+    <div class="block">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -109,7 +100,7 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="list.allCount"
       ></el-pagination>
-    </div>-->
+    </div>
   </div>
 </template>
 

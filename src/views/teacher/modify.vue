@@ -58,22 +58,78 @@
       <el-form-item label="备注">
         <el-input v-model="detail.remark" type="textarea"/>
       </el-form-item>
-      <el-form-item>
+      <!--  <el-form-item>
         <el-button type="primary" @click="onSubmit">修改</el-button>
         <el-button @click="resetForm('detail')">重置</el-button>
+      </el-form-item>-->
+    </el-form>
+    <hr>
+    <el-form
+      ref="form"
+      :model="edu"
+      label-width="200px"
+      size="medium"
+      :inline="true"
+      label-position="top"
+    >
+      <el-form-item label="起止时间" prop="edu1_time">
+        <el-input v-model="edu.edu1_time" placeholder="例:2016年6月-2019年9月"/>
       </el-form-item>
+      <el-form-item label="学校" prop="edu1_school">
+        <el-input v-model="edu.edu1_school"/>
+      </el-form-item>
+      <el-form-item label="学历" prop="edu1_name">
+        <el-input v-model="edu.edu1_name" placeholder="本科"/>
+      </el-form-item>
+      <br>
+      <el-form-item label prop="edu2_time">
+        <el-input v-model="edu.edu2_time"/>
+      </el-form-item>
+      <el-form-item label prop="edu2_school">
+        <el-input v-model="edu.edu2_school"/>
+      </el-form-item>
+      <el-form-item label prop="edu2_name">
+        <el-input v-model="edu.edu2_name" placeholder="硕士"/>
+      </el-form-item>
+      <br>
+      <el-form-item label prop="edu3_time">
+        <el-input v-model="edu.edu3_time"/>
+      </el-form-item>
+      <el-form-item label prop="edu3_school">
+        <el-input v-model="edu.edu3_school"/>
+      </el-form-item>
+      <el-form-item label prop="edu3_name">
+        <el-input v-model="edu.edu3_name" placeholder="博士"/>
+      </el-form-item>
+      <br>
+      <!--  <el-form-item>
+        <el-button type="primary" @click="onSubmit">修改</el-button>
+        <el-button @click="resetForm('detail')">重置</el-button>
+      </el-form-item>-->
     </el-form>
   </div>
 </template>
 <script>
 import { TeacherModify } from "@/api/teacher";
+import { EduList, EduModify } from "@/api/edu";
 export default {
   data() {
     return {
-      detail: {}
+      detail: {},
+      edu: {} // 存放个人的教育经历
     };
   },
   methods: {
+    EduShow() {
+      EduList({ tid: this.detail.tid })
+        .then(res => {
+          console.log(res);
+          this.edu = res.info.list[0];
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     onSubmit() {
       TeacherModify(this.detail._id, this.detail)
         .then(req => {
@@ -95,7 +151,7 @@ export default {
   },
   created() {
     this.detail = this.$route.params;
-    // console.log(this.$route);
+    this.EduShow();
   }
 };
 </script>

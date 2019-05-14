@@ -23,9 +23,12 @@
 <script>
 import { ProjectAdd } from "@/api/project";
 import { Format } from "@/utils/formateDate";
+import { mapGetters } from "vuex";
+import { TeacherList } from "@/api/teacher";
 export default {
   data() {
     return {
+      list: null,
       detail: {},
       rules: {
         subject_title: [
@@ -40,34 +43,51 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapGetters(["name"])
+  },
   methods: {
     onSubmit() {
-      // 传递的参数
-      this.detail.tid = localStorage.getItem("id");
-      this.detail.tname = localStorage.getItem("name");
-      this.detail.apply_time = Format(new Date(), "/");
-      this.detail.check = 0;
-      this.detail.check_time = "";
-      this.detail.mark = "";
-      this.detail.complete = "";
-      console.log(this.detail);
-      ProjectAdd(this.detail)
-        .then(req => {
-          // console.log(req);
-          if (req.code === 1) {
-            this.$message({
-              showClose: true,
-              message: "添加成功!",
-              type: "success"
+      TeacherList({ tid: this.name }).then(response => {
+        console.log(response);
+        this.list = response.info.list[0];
+        if (!response.info.allCount) {
+          this.$message({
+            showClose: true,
+            message: "添加失败!!",
+            type: "error"
+          });
+          return;
+        } else {
+          // 添加项目
+          // 传递的参数
+          this.detail.tid = localStorage.getItem("id");
+          this.detail.apply_time = Format(new Date(), "/");
+          this.detail.check = 0;
+          this.detail.check_time = "";
+          this.detail.mark = "";
+          this.detail.complete = "";
+          this.detail.t_id = this.list._id;
+          console.log(this.detail);
+          ProjectAdd(this.detail)
+            .then(req => {
+              // console.log(req);
+              if (req.code === 1) {
+                this.$message({
+                  showClose: true,
+                  message: "添加成功!",
+                  type: "success"
+                });
+                this.$router.push("/Myproject");
+              } else {
+                this.$message("添加失败!");
+              }
+            })
+            .catch(err => {
+              console.log(err);
             });
-            this.$router.push("/Myproject");
-          } else {
-            this.$message("添加失败!");
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+        }
+      });
     },
     // 返回
     resetForm() {

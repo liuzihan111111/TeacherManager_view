@@ -5,7 +5,7 @@
         <el-input v-model="detail.tid" :disabled="true"/>
       </el-form-item>
       <el-form-item label="姓名">
-        <el-input v-model="detail.tname" :disabled="true"/>
+        <el-input v-model="detail.t_id.tname" :disabled="true"/>
       </el-form-item>
       <el-form-item label="项目名">
         <el-input v-model="detail.subject_title" :disabled="true"/>

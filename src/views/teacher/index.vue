@@ -95,12 +95,12 @@
       <el-table-column align="center" prop="created_at" label="操作" width="140" fixed="right">
         <template slot-scope="scope">
           <el-button
-            icon="el-icon-edit"
+            icon="el-icon-news"
             type="primary"
             circle
             size="mini"
             @click="handleEdit(scope.row)"
-            title="修改记录"
+            title="教师详情"
           ></el-button>
           <el-button
             size="mini"
