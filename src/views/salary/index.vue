@@ -71,14 +71,14 @@
             @click="handleEdit(scope.row)"
             title="修改记录"
           ></el-button>
-          <!--  <el-button
+          <el-button
             size="mini"
             type="danger"
             circle
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             title="删除记录"
-          ></el-button>-->
+          ></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -98,7 +98,7 @@
 
 <script>
 import { SalaryList, SalaryDelete } from "@/api/salary";
-
+import { mapGetters } from "vuex";
 export default {
   filters: {
     statusFilter(status) {
@@ -112,7 +112,10 @@ export default {
   },
   data() {
     return {
-      list: null, // 返回数据列表
+      list: {
+        allCount: 0,
+        list: []
+      }, // 返回数据列表
       listLoading: true, // 加载中
       formInline: {
         // 搜索条件，value
@@ -122,6 +125,9 @@ export default {
       currentPage: 1, // 分页，当前页数
       per: 10 // 每页的条数
     };
+  },
+  computed: {
+    ...mapGetters(["major"])
   },
   created() {
     // 初始化列表
@@ -138,12 +144,33 @@ export default {
       data.tid = content;
       data.page = this.currentPage;
       data.per = this.per;
-      // 调用薪资列表
-      SalaryList(data).then(response => {
-        // console.log(response);
-        this.list = response.info;
-        this.listLoading = false;
-      });
+      if (this.major) {
+        console.log(this.major);
+        data.major_name = this.major;
+        // 调用薪酬信息列表
+        SalaryList(data).then(response => {
+          console.log(response);
+          var count = 0;
+          response.info.list.forEach(item => {
+            if (item.t_id) {
+              console.log(item);
+              count += 1;
+              this.list.list.push(item);
+            }
+          });
+          this.list.allCount = count;
+          console.log(this.list);
+          this.listLoading = false;
+        });
+        return;
+      } else {
+        // 调用薪资列表
+        SalaryList(data).then(response => {
+          console.log(response);
+          this.list = response.info;
+          this.listLoading = false;
+        });
+      }
     },
     // 按条件查询
     SearchHandle() {
@@ -167,7 +194,6 @@ export default {
         type: "warning"
       })
         .then(() => {
-          console.log(1111);
           SalaryDelete(row._id).then(res => {
             // console.log(res)
             if (res.code === 1) {
