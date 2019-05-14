@@ -7,7 +7,7 @@
       <el-form-item label="课程名" prop="cname">
         <el-input v-model="form.cname"/>
       </el-form-item>
-      <el-form-item label="总人数" prop="number">
+      <el-form-item label="总人数" prop="Number">
         <el-input v-model="form.Number"/>
       </el-form-item>
       <el-form-item label="学历层次" prop="edu">
@@ -46,7 +46,7 @@ export default {
       rules: {
         tid: [{ required: true, message: "请输入教师工号", trigger: "blur" }],
         cname: [{ required: true, message: "请输入课程名", trigger: "blur" }],
-        number: [{ required: true, message: "请输入总人数", trigger: "blur" }],
+        Number: [{ required: true, message: "请输入总人数", trigger: "blur" }],
         edu: [
           { required: true, message: "请输入授课学生学历", trigger: "blur" }
         ],

@@ -5,7 +5,7 @@
         <el-select placeholder="查询类别" v-model="formInline.region">
           <el-option label="授课教师工号" value="tid"></el-option>
           <el-option label="课程名" value="cname"></el-option>
-          <el-option label="学历类别" value="type"></el-option>
+          <el-option label="学历层次" value="type"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label>
@@ -48,7 +48,7 @@
           <span>{{ scope.row.Number }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="学历类别" align="center" width="120">
+      <el-table-column label="学历层次" align="center" width="120">
         <template slot-scope="scope">
           <span>{{ scope.row.type }}</span>
         </template>
@@ -116,7 +116,10 @@ export default {
   },
   data() {
     return {
-      list: null, // 返回数据列表
+      list: {
+        allCount: 0,
+        list: []
+      }, // 返回数据列表
       listLoading: true, // 加载中
       formInline: {
         // 搜索条件，value
@@ -145,13 +148,34 @@ export default {
       data[title] = content;
       data.page = this.currentPage;
       data.per = this.per;
-      console.log(data);
-      // 调用排课信息列表
-      ScheduleList(data).then(response => {
-        console.log(response);
-        this.list = response.info;
-        this.listLoading = false;
-      });
+      /*  data.major_name = "会计学院";
+      console.log(data); */
+      if (this.major) {
+        console.log(this.major);
+        data.major_name = this.major;
+        // 调用排课信息列表
+        ScheduleList(data).then(response => {
+          console.log(response);
+          var count = 0;
+          response.info.list.forEach(item => {
+            if (item.t_id) {
+              console.log(item);
+              count += 1;
+              this.list.list.push(item);
+            }
+          });
+          this.list.allCount = count;
+          console.log(this.list);
+          this.listLoading = false;
+        });
+      } else {
+        // 调用排课信息列表
+        ScheduleList(data).then(response => {
+          console.log(response);
+          this.list = response.info;
+          this.listLoading = false;
+        });
+      }
     },
     // 按条件查询
     SearchHandle() {

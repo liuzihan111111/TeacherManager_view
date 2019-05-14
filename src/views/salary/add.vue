@@ -41,16 +41,16 @@ export default {
   data() {
     return {
       form: {
-        tid: "",
+        /* tid: "",
         basePay: "",
         ClassFees: "",
         PerformanceSalary: "",
         bonus: "",
         allowance: "",
         other: "",
-        mark: "无"
+        mark: "无" */
       },
-       list: null,
+      list: null,
       rules: {
         tid: [{ required: true, message: "请输入教师工号", trigger: "blur" }],
         basePay: [
@@ -64,51 +64,54 @@ export default {
   },
   methods: {
     onSubmit() {
-      // console.log(this.form);
-      this.form.basePay = Number(this.form.basePay);
+      // console.log(this.form.tid);
+      /* this.form.basePay = Number(this.form.basePay);
       this.form.ClassFees = Number(this.form.ClassFees);
       this.form.PerformanceSalary = Number(this.form.PerformanceSalary);
       this.form.bonus = Number(this.form.bonus);
       this.form.allowance = Number(this.form.allowance);
       this.form.other = Number(this.form.other);
-       TeacherList({ tid: this.form.tid,major_name: this.major  }).then(response => {
-        console.log(response);
-        this.list = response.info.list[0];
-        if (!response.info.allCount) {
-          this.$message({
-            showClose: true,
-            message: "该账号不存在，或不属于该系!!",
-            type: "error"
-          });
-          return;
-        }else{
-          this.form.t_id = this.list._id;
-          SalaryAdd(this.form)
-            .then(res => {
-            console.log(res);
-            if (res.code === 1) {
-              this.$message({
-                showClose: true,
-                message: "添加成功!!",
-                type: "success"
+      console.log(this.form.basePay); */
+      TeacherList({ tid: this.form.tid, major_name: this.major })
+        .then(response => {
+          console.log(response);
+          this.list = response.info.list[0];
+          if (!response.info.allCount) {
+            this.$message({
+              showClose: true,
+              message: "该账号不存在，或不属于该系!!",
+              type: "error"
+            });
+            return;
+          } else {
+            console.log(this.form);
+            this.form.t_id = this.list._id;
+            SalaryAdd(this.form)
+              .then(res => {
+                console.log(res);
+                if (res.code === 1) {
+                  this.$message({
+                    showClose: true,
+                    message: "添加成功!!",
+                    type: "success"
+                  });
+                } else {
+                  this.$message({
+                    showClose: true,
+                    message: "添加失败!!",
+                    type: "error"
+                  });
+                }
+              })
+              .catch(err => {
+                console.log(err);
               });
-             } else {
-              this.$message({
-                showClose: true,
-                message: "添加失败!!",
-                type: "error"
-              });
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
-          this.$refs["form"].resetFields();
-        }
-      }).catch(err => {
-            console.log(err);
-          });
-      
+            this.$refs["form"].resetFields();
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
