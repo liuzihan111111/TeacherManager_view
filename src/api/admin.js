@@ -51,7 +51,7 @@ export function AdminAdd(params) {
 /**
  * 修改管理员信息
  */
-export function AdminModify(params) {
-  return request.post(`/api/v1//admin/ModifyAdmin`, params)
+export function AdminModify(id, params) {
+  return request.post(`/api/v1//admin/ModifyAdmin/${id}`, params)
 }
 

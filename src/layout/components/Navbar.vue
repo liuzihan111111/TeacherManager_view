@@ -21,7 +21,7 @@
           <router-link to="/">
             <el-dropdown-item>首页</el-dropdown-item>
           </router-link>
-          <router-link to="/motifyPwd">
+          <router-link to="/motifyPwd" v-if="id">
             <el-dropdown-item>修改密码</el-dropdown-item>
           </router-link>
           <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">

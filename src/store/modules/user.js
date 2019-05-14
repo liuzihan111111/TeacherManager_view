@@ -80,7 +80,9 @@ const actions = {
       // const { name, avatar } = data
 
       commit('SET_NAME', username)
-      commit('SET_MAJOR', localStorage.getItem('name'))
+      if (localStorage.getItem('role') === 2) {
+        commit('SET_MAJOR', localStorage.getItem('name'))
+      }
       commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
       resolve(username)
     })
@@ -110,8 +112,10 @@ const actions = {
     return new Promise((resolve, reject) => {
       localStorage.setItem('id', '')
       localStorage.setItem('name', '')
+      localStorage.setItem('role', '')
       commit('SET_MAJOR', '')
       commit('SET_TOKEN', '')
+      commit('SET_NAME', '')
       removeToken()
       resetRouter()
       resolve()
