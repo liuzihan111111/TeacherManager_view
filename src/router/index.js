@@ -96,12 +96,12 @@ export const adminRouterMap = [
         component: () => import('@/views/teacher/index'),
         meta: { title: '教师信息列表', icon: 'table' }
       },
-      {
+      /* {
         path: 'TeacherGroup',
         name: 'TeacherGroup',
         component: () => import('@/views/teacher/count'),
         meta: { title: '统计与分析', icon: 'tab' }
-      },
+      }, */
       {
         path: 'TeacherAdd',
         name: 'TeacherAdd',
@@ -240,6 +240,21 @@ export const adminRouterMap = [
     ]
   },
   {
+    path: '/group',
+    component: Layout,
+    redirect: '/group/TeacherGroup',
+    name: 'Teacher',
+    meta: { title: '统计分析', icon: 'example' },
+    children: [
+      {
+        path: 'TeacherGroup',
+        name: 'TeacherGroup',
+        component: () => import('@/views/teacher/count'),
+        meta: { title: '统计分析', icon: 'example' }
+      }
+    ]
+  },
+  {
     path: '/system',
     component: Layout,
     redirect: '/system/weihu',
@@ -357,12 +372,12 @@ export const majorRouterMap = [
         component: () => import('@/views/teacher/index'),
         meta: { title: '教师信息列表', icon: 'table' }
       },
-      {
-        path: 'TeacherGroup',
-        name: 'TeacherGroup',
-        component: () => import('@/views/teacher/count'),
-        meta: { title: '统计与分析', icon: 'tab' }
-      },
+      /*  {
+         path: 'TeacherGroup',
+         name: 'TeacherGroup',
+         component: () => import('@/views/teacher/count'),
+         meta: { title: '统计与分析', icon: 'tab' }
+       }, */
       {
         path: 'TeacherAdd',
         name: 'TeacherAdd',
@@ -464,6 +479,21 @@ export const majorRouterMap = [
         name: 'DepartmentsChange',
         component: () => import('@/views/departments/change'),
         meta: { title: '人员调动', icon: 'documentation' }
+      }
+    ]
+  },
+  {
+    path: '/group',
+    component: Layout,
+    redirect: '/group/TeacherGroup',
+    name: 'Teacher',
+    meta: { title: '统计分析', icon: 'example' },
+    children: [
+      {
+        path: 'TeacherGroup',
+        name: 'TeacherGroup',
+        component: () => import('@/views/teacher/count'),
+        meta: { title: '统计分析', icon: 'example' }
       }
     ]
   },

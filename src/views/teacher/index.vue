@@ -14,9 +14,18 @@
         <el-input placeholder="查询条件" v-model="formInline.user"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" plain icon="el-icon-search" @click="SearchHandle"></el-button>
+        <el-button type="primary" plain icon="el-icon-search" @click="SearchHandle" title="按条件搜索"></el-button>
       </el-form-item>
-      <i class="opera" title="新增教师" @click="AddTeacherRow">新增</i>
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-edit" title="新增教师" @click="AddTeacherRow">新增</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-download"
+          title="导出教师信息表"
+          @click="ExcelExport"
+          :loading="downloadLoading"
+        >导出</el-button>
+      </el-form-item>
     </el-form>
     <el-table
       v-loading="listLoading"
@@ -145,6 +154,7 @@ export default {
   },
   data() {
     return {
+      downloadLoading: false,
       // major: null, // 所属院系
       list: null, // 返回数据列表
       listLoading: true, // 加载中
@@ -185,7 +195,7 @@ export default {
       data.per = this.per;
       // 调用教师列表
       TeacherList(data).then(response => {
-        // console.log(response);
+        console.log(response);
         this.list = response.info;
         this.listLoading = false;
       });
@@ -255,6 +265,54 @@ export default {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.fetchData();
+    },
+    // 信息导出
+    ExcelExport() {
+      console.log(111);
+      this.downloadLoading = true;
+      import("@/vendor/Export2Excel").then(excel => {
+        const tHeader = [
+          "工号",
+          "姓名",
+          "地址",
+          "性别",
+          "出生日期",
+          "婚否",
+          "政治面貌",
+          "学历",
+          "所属院系",
+          "职称",
+          "电话",
+          "备注"
+        ];
+        var data = [];
+        this.list.list.forEach((item, index) => {
+          var arr = [];
+          arr.push(item.tid);
+          arr.push(item.tname);
+          arr.push(item.address);
+          arr.push(item.sex);
+          arr.push(item.birth);
+          arr.push(item.marriage);
+          arr.push(item.polity);
+          arr.push(item.edu);
+          arr.push(item.major_name);
+          arr.push(item.duty);
+          arr.push(item.tel);
+          arr.push(item.remark);
+          data.push(arr);
+        });
+        // console.log(data);
+        // console.log(tHeader);
+        excel.export_json_to_excel({
+          header: tHeader, //表头 必填
+          data, //具体数据 必填
+          filename: "teaherlist", //非必填
+          autoWidth: true, //非必填
+          bookType: "xlsx" //非必填
+        });
+        this.downloadLoading = false;
+      });
     }
   }
 };
@@ -263,7 +321,7 @@ export default {
 .app-container {
   border-bottom: 1px solid #cecece;
 }
-.opera {
+/* .opera {
   cursor: pointer;
   margin-top: 6px;
   margin-right: 25px;
@@ -274,7 +332,7 @@ export default {
 }
 .opera:hover {
   color: #409eff;
-}
+} */
 .block {
   padding-top: 15px;
   display: flex;
