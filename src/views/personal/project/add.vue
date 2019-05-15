@@ -13,6 +13,29 @@
       <el-form-item label="项目说明">
         <el-input type="textarea" :rows="3" v-model="detail.subject_desc"/>
       </el-form-item>
+      <el-form-item label="证明材料">
+        <img
+          :src="serverurl+detail.src"
+          title="点击放大"
+          style="width:15%;cursor:pointer"
+          @click="PictureShow"
+          v-if="detail.src"
+        >
+        <el-upload
+          v-else
+          action="11"
+          :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove"
+          multiple
+          :before-upload="beforeUpload"
+        >
+          <el-button size="small" type="primary">点击上传</el-button>
+          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
+        <el-dialog :visible.sync="dialogVisible" size="tiny">
+          <img width="100%" :src="serverurl+detail.src" alt>
+        </el-dialog>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit" title="提交项目申请">提交</el-button>
         <el-button @click="resetForm" title="返回项目列表页">返回</el-button>
@@ -21,15 +44,19 @@
   </div>
 </template>
 <script>
-import { ProjectAdd } from "@/api/project";
+import { ProjectAdd, Upload } from "@/api/project";
 import { Format } from "@/utils/formateDate";
 import { mapGetters } from "vuex";
 import { TeacherList } from "@/api/teacher";
 export default {
   data() {
     return {
+      dialogVisible: false,
+      serverurl: "http://localhost:3000",
       list: null,
-      detail: {},
+      detail: {
+        src: null // 图片路径
+      },
       rules: {
         subject_title: [
           { required: true, message: "项目名不能为空", trigger: "blur" }
@@ -92,6 +119,34 @@ export default {
     // 返回
     resetForm() {
       this.$router.push("/Myproject");
+    },
+    handleRemove(file, fileList) {
+      //console.log("2222");
+      // console.log(file, fileList);
+    },
+    PictureShow() {
+      this.dialogVisible = true;
+    },
+    beforeUpload(file) {
+      let fd = new FormData(); //通过form数据格式来传
+      fd.append("file", file); //传文件
+      Upload(fd)
+        .then(res => {
+          if (res.code == 1) {
+            this.detail.src = res.info;
+          } else {
+            this.$message({
+              showClose: true,
+              message: "文件上传失败!!",
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+      return false;
     }
   }
 };

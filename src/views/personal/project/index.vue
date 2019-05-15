@@ -60,7 +60,7 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="apply_time" label="申请时间" width="120">
+      <el-table-column align="center" prop="apply_time" label="提交时间" width="120">
         <template slot-scope="scope">{{ scope.row.apply_time }}</template>
       </el-table-column>
       <el-table-column align="center" prop="check_time" label="审核时间" width="120">

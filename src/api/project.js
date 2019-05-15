@@ -35,3 +35,9 @@ export function ProjectAdd(params) {
 export function ProjectModify(id, params) {
   return request.post(`/api/v1/project/modify/${id}`, params)
 }
+/*
+图片上传
+*/
+export function Upload(params) {
+  return request.post('/api/v2/common/file_upload', params)
+}

@@ -22,6 +22,18 @@
       <el-form-item label="申请时间">
         <el-input v-model="detail.apply_time" :disabled="true"/>
       </el-form-item>
+      <el-form-item label="证明材料">
+        <img
+          :src="serverurl+detail.src"
+          title="点击放大"
+          style="width:15%;cursor:pointer"
+          @click="PictureShow"
+          alt="暂无材料"
+        >
+        <el-dialog :visible.sync="dialogVisible" size="tiny">
+          <img width="100%" :src="serverurl+detail.src" alt>
+        </el-dialog>
+      </el-form-item>
       <el-form-item label="审核" prop="check">
         <el-radio-group v-model="detail.check" size="small">
           <el-radio label="2" border>不通过</el-radio>
@@ -44,6 +56,8 @@ import { Format } from "@/utils/formateDate";
 export default {
   data() {
     return {
+      dialogVisible: false,
+      serverurl: "http://localhost:3000",
       detail: {},
       rules: {
         check: [{ required: true, message: "请选择", trigger: "blur" }]
@@ -85,6 +99,10 @@ export default {
           type: "warning"
         });
       }
+    },
+    // 查看图片
+    PictureShow() {
+      this.dialogVisible = true;
     },
     // 返回
     resetForm() {

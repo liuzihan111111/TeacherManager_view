@@ -13,6 +13,30 @@
       <el-form-item label="项目说明">
         <el-input type="textarea" :rows="3" v-model="detail.subject_desc"/>
       </el-form-item>
+      <el-form-item label="项目说明">
+        <el-input type="textarea" :rows="3" v-model="detail.subject_desc"/>
+      </el-form-item>
+      <el-form-item label="证明材料">
+        <img
+          :src="serverurl+detail.src"
+          title="点击放大"
+          style="width:15%;cursor:pointer"
+          @click="PictureShow"
+          alt="暂无材料"
+        >
+        <el-upload
+          action="11"
+          :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove"
+          multiple
+          :before-upload="beforeUpload"
+        >
+          <el-button size="small" type="primary" title="上传图片">修改材料</el-button>
+        </el-upload>
+        <el-dialog :visible.sync="dialogVisible" size="tiny">
+          <img width="100%" :src="serverurl+detail.src" alt>
+        </el-dialog>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit" title="提交项目修改">修改</el-button>
         <el-button @click="resetForm" title="返回项目列表页">返回</el-button>
@@ -21,10 +45,12 @@
   </div>
 </template>
 <script>
-import { ProjectModify } from "@/api/project";
+import { ProjectModify, Upload } from "@/api/project";
 export default {
   data() {
     return {
+      dialogVisible: false,
+      serverurl: "http://localhost:3000",
       detail: {},
       rules: {
         subject_title: [
@@ -40,6 +66,7 @@ export default {
     };
   },
   methods: {
+    // 修改
     onSubmit() {
       // console.log(this.detail.check);
       var data = {};
@@ -73,6 +100,32 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    // 查看图片
+    PictureShow() {
+      this.dialogVisible = true;
+    },
+    // 图片上传
+    beforeUpload(file) {
+      let fd = new FormData(); //通过form数据格式来传
+      fd.append("file", file); //传文件
+      Upload(fd)
+        .then(res => {
+          if (res.code == 1) {
+            this.detail.src = res.info;
+          } else {
+            this.$message({
+              showClose: true,
+              message: "文件上传失败!!",
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+      return false;
     },
     // 返回
     resetForm() {
