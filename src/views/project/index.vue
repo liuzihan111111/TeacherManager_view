@@ -16,7 +16,7 @@
       <el-form-item label>
         <el-input placeholder="完成时间" v-model="formInline.subject_time"></el-input>
       </el-form-item>
-      <el-form-item label>
+      <el-form-item label v-if="!major">
         <el-input placeholder="所属院系" v-model="formInline.major"></el-input>
       </el-form-item>
       <el-form-item>
@@ -187,10 +187,14 @@ export default {
       data[title] = content;
       data.page = this.currentPage;
       data.per = this.per;
-      data.major_name = this.major;
       data.subject_type = this.formInline.subject_type;
       data.subject_time = this.formInline.subject_time;
-      console.log(data);
+      if (this.major) {
+        data.major_name = this.major;
+      } else {
+        data.major_name = this.formInline.major;
+      }
+      // console.log(data);
       if (data.major_name) {
         //console.log(this.major);
         // data.major_name = this.major;
