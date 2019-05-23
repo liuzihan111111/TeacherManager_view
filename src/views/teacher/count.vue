@@ -31,12 +31,13 @@
       border
       :summary-method="getSummaries"
       show-summary
-      style="width: 35%; margin: 45px 0 0 80px;float:left"
+      style="width: 40%; margin: 45px 0 0 60px;float:left"
       size="small"
       highlight-current-row
     >
       <el-table-column prop="_id" label="分组" width="250" align="center"></el-table-column>
       <el-table-column prop="num" label="数量" align="center"></el-table-column>
+      <el-table-column prop="percentage" label="百分比(%)" align="center"></el-table-column>
     </el-table>
     <div id="myChart" class="chart"></div>
   </div>
@@ -65,6 +66,7 @@ export default {
   },
   data() {
     return {
+      total: null, // 总记录数
       list: null, // 返回数据列表
       listLoading: true, // 加载中
       title: [],
@@ -94,8 +96,7 @@ export default {
         },
         legend: {
           orient: "vertical",
-          left: "left",
-          data: ["直接访问", "邮件营销", "联盟广告", "视频广告", "搜索引擎"]
+          left: "left"
         },
         series: [
           {
@@ -168,17 +169,17 @@ export default {
       // 调用教师统计
       TeacherGroup(this.formInline.group, data)
         .then(response => {
-          console.log(response);
+          // console.log(response);
           if (response.code == 1) {
-            this.list = response.info;
+            this.list = response.info.list;
+            this.total = response.info.allCount;
             this.content = [];
             this.title = [];
-            response.info.forEach((item, index) => {
-              // this.title.push(item._id);
-              // this.content.push(item.num);
+            response.info.list.forEach((item, index) => {
               this.content.push({ value: item.num, name: item._id });
+              item.percentage = ((item.num / this.total) * 100).toFixed(2);
             });
-            console.log(this.content);
+            // console.log(this.list);
             this.chart.setOption({
               /*  xAxis: {
                 data: this.title
@@ -206,6 +207,7 @@ export default {
     },
     // 总计
     getSummaries(param) {
+      console.log(param);
       const { columns, data } = param;
       const sums = [];
       columns.forEach((column, index) => {
@@ -227,7 +229,6 @@ export default {
           sums[index] = "N/A";
         }
       });
-
       return sums;
     }
   }

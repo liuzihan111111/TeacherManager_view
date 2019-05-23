@@ -478,7 +478,7 @@ export const majorRouterMap = [
         path: 'change',
         name: 'DepartmentsChange',
         component: () => import('@/views/departments/change'),
-        meta: { title: '人员调动', icon: 'documentation' }
+        meta: { title: '人员调动申请', icon: 'documentation' }
       }
     ]
   },
