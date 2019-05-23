@@ -3,12 +3,21 @@
     <el-form class="demo-form-inline" :inline="true" :model="formInline" size="mini">
       <el-form-item label>
         <el-select placeholder="查询类别" v-model="formInline.region">
-          <el-option label="工号" value="tid"></el-option>
-          <el-option label="项目名" value="subject_title"></el-option>
+          <el-option label="负责人工号" value="tid"></el-option>
+          <el-option label="成果名" value="subject_title"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label>
         <el-input placeholder="查询条件" v-model="formInline.user"></el-input>
+      </el-form-item>
+      <el-form-item label>
+        <el-input placeholder="成果类别" v-model="formInline.subject_type"></el-input>
+      </el-form-item>
+      <el-form-item label>
+        <el-input placeholder="完成时间" v-model="formInline.subject_time"></el-input>
+      </el-form-item>
+      <el-form-item label>
+        <el-input placeholder="所属院系" v-model="formInline.major"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" plain icon="el-icon-search" @click="SearchHandle"></el-button>
@@ -49,7 +58,13 @@
           <span>{{ scope.row.subject_level }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="主要完成人" align="center" width="120" prop="subject_peoples">
+      <el-table-column
+        label="主要完成人"
+        align="center"
+        width="120"
+        prop="subject_peoples"
+        show-overflow-tooltip
+      >
         <template slot-scope="scope">
           <span>{{ scope.row.subject_peoples }}</span>
         </template>
@@ -172,14 +187,18 @@ export default {
       data[title] = content;
       data.page = this.currentPage;
       data.per = this.per;
+      data.major_name = this.major;
+      data.subject_type = this.formInline.subject_type;
+      data.subject_time = this.formInline.subject_time;
       console.log(data);
-      if (this.major) {
-        console.log(this.major);
-        data.major_name = this.major;
-        // 调用薪酬信息列表
+      if (data.major_name) {
+        //console.log(this.major);
+        // data.major_name = this.major;
+        // 调用科研信息列表
         ProjectList(data).then(response => {
           console.log(response);
           var count = 0;
+          this.list.list = [];
           response.info.list.forEach(item => {
             if (item.t_id) {
               console.log(item);

@@ -151,6 +151,7 @@ export default {
         SalaryList(data).then(response => {
           console.log(response);
           var count = 0;
+          this.list.list = [];
           response.info.list.forEach(item => {
             if (item.t_id) {
               console.log(item);
