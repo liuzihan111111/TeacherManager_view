@@ -4,11 +4,17 @@
       <el-form-item label="项目名" prop="subject_title">
         <el-input v-model="detail.subject_title"/>
       </el-form-item>
+      <el-form-item label="项目级别" prop="subject_title">
+        <el-input v-model="detail.subject_type"/>
+      </el-form-item>
       <el-form-item label="时长（天）" prop="subject_time">
         <el-input v-model="detail.subject_time"/>
       </el-form-item>
       <el-form-item label="研究经费" prop="subject_funding">
         <el-input v-model="detail.subject_funding"/>
+      </el-form-item>
+      <el-form-item label="经费来源" prop="subject_funding">
+        <el-input v-model="detail.subject_from"/>
       </el-form-item>
       <el-form-item label="项目说明">
         <el-input type="textarea" :rows="3" v-model="detail.subject_desc"/>

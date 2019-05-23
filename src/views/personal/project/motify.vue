@@ -4,11 +4,17 @@
       <el-form-item label="项目名" prop="subject_title">
         <el-input v-model="detail.subject_title"/>
       </el-form-item>
+      <el-form-item label="项目级别" prop="subject_title">
+        <el-input v-model="detail.subject_type"/>
+      </el-form-item>
       <el-form-item label="时长（天）" prop="subject_time">
         <el-input v-model="detail.subject_time"/>
       </el-form-item>
       <el-form-item label="研究经费" prop="subject_funding">
         <el-input v-model="detail.subject_funding"/>
+      </el-form-item>
+      <el-form-item label="经费来源" prop="subject_funding">
+        <el-input v-model="detail.subject_from"/>
       </el-form-item>
       <el-form-item label="项目说明">
         <el-input type="textarea" :rows="3" v-model="detail.subject_desc"/>
@@ -81,6 +87,15 @@ export default {
       }
       if (this.detail.subject_desc) {
         data.subject_desc = this.detail.subject_desc;
+      }
+      if (this.detail.subject_type) {
+        data.subject_type = this.detail.subject_type;
+      }
+      if (this.detail.subject_from) {
+        data.subject_from = this.detail.subject_from;
+      }
+      if (this.detail.src) {
+        data.src = this.detail.src;
       }
       // console.log(data);
       ProjectModify(this.detail._id, data)

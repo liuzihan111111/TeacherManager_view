@@ -27,6 +27,11 @@
           <span>{{ scope.row.subject_title }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="项目级别" align="center" width="120">
+        <template slot-scope="scope">
+          <span>{{ scope.row.subject_type }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="时长（天）" sortable align="center" width="120" prop="subject_time">
         <template slot-scope="scope">
           <span>{{ scope.row.subject_time }}</span>
@@ -35,6 +40,11 @@
       <el-table-column label="研究经费" sortable align="center" width="120" prop="subject_funding">
         <template slot-scope="scope">
           <span>{{ scope.row.subject_funding }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="经费来源" align="center" width="120" prop="subject_funding">
+        <template slot-scope="scope">
+          <span>{{ scope.row.subject_from }}</span>
         </template>
       </el-table-column>
       <el-table-column

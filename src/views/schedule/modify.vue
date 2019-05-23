@@ -2,13 +2,16 @@
   <div class="app-container">
     <el-form ref="form" :model="detail" label-width="120px" size="small" :rules="rules">
       <el-form-item label="教师工号" prop="tid">
-        <el-input v-model="detail.tid"/>
+        <el-input v-model="detail.tid" disabled="true"/>
       </el-form-item>
       <el-form-item label="授课老师" prop="tname">
-        <el-input v-model="detail.tname"/>
+        <el-input v-model="detail.t_id.tname" disabled="true"/>
       </el-form-item>
       <el-form-item label="课程名" prop="cname">
         <el-input v-model="detail.cname"/>
+      </el-form-item>
+      <el-form-item label="学分" prop="cname">
+        <el-input v-model="detail.score"/>
       </el-form-item>
       <el-form-item label="总人数" prop="ClassTime">
         <el-input v-model="detail.Number"/>

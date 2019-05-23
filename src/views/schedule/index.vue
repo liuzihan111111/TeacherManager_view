@@ -40,6 +40,11 @@
           <span>{{ scope.row.t_id.tname }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="学分" align="center" width="120">
+        <template slot-scope="scope">
+          <span>{{ scope.row.score }}</span>
+        </template>
+      </el-table-column>
       <el-table-column align="center" prop="created_at" label="总课时" width="120">
         <template slot-scope="scope">{{ scope.row.ClassHour }}</template>
       </el-table-column>

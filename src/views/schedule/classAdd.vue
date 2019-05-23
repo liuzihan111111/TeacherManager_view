@@ -7,6 +7,9 @@
       <el-form-item label="课程名" prop="cname">
         <el-input v-model="form.cname"/>
       </el-form-item>
+      <el-form-item label="学分" prop="cname">
+        <el-input v-model="form.score"/>
+      </el-form-item>
       <el-form-item label="总人数" prop="Number">
         <el-input v-model="form.Number"/>
       </el-form-item>

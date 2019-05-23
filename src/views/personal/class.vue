@@ -21,21 +21,26 @@
       </el-table-column>
       <el-table-column label="授课老师" align="center" width="120">
         <template slot-scope="scope">
-          <span>{{ scope.row.tname }}</span>
+          <span>{{ scope.row.t_id.tname }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="上课时间" align="center" width="150">
+      <el-table-column label="学分" align="center" width="120">
         <template slot-scope="scope">
-          <span>{{ scope.row.ClassTime }}</span>
+          <span>{{ scope.row.score }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="上课地点" align="center" width="120">
+      <el-table-column label="总课时" align="center" width="150">
         <template slot-scope="scope">
-          <span>{{ scope.row.ClassPlace }}</span>
+          <span>{{ scope.row.ClassHour }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="总课时" width="120">
-        <template slot-scope="scope">{{ scope.row.ClassHour }}</template>
+      <el-table-column label="总人数" align="center" width="120">
+        <template slot-scope="scope">
+          <span>{{ scope.row.Number }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="created_at" label="学历层次" width="120">
+        <template slot-scope="scope">{{ scope.row.type }}</template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="上课班级" width="150">
         <template slot-scope="scope">{{ scope.row.Student }}</template>
@@ -72,7 +77,7 @@ export default {
     // 获取列表信息
     fetchData() {
       this.listLoading = true;
-      // 调用排课信息列表
+      // 调用授课记录信息列表
       ScheduleList({ tid: localStorage.getItem("id") }).then(response => {
         console.log(response);
         this.list = response.info;
