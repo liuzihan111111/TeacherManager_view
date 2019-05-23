@@ -1,32 +1,32 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="detail" label-width="120px" size="mini" :rules="rules">
-      <el-form-item label="工号">
+      <el-form-item label="负责人工号">
         <el-input v-model="detail.tid" :disabled="true"/>
       </el-form-item>
-      <el-form-item label="姓名">
+      <el-form-item label="负责人姓名">
         <el-input v-model="detail.t_id.tname" :disabled="true"/>
       </el-form-item>
-      <el-form-item label="项目名">
+      <el-form-item label="成果名">
         <el-input v-model="detail.subject_title" :disabled="true"/>
       </el-form-item>
-      <el-form-item label="项目级别">
+      <el-form-item label="成果类别">
         <el-input v-model="detail.subject_type" :disabled="true"/>
       </el-form-item>
-      <el-form-item label="时长（天">
+      <el-form-item label="级别">
+        <el-input v-model="detail.subject_level" :disabled="true"/>
+      </el-form-item>
+      <el-form-item label="主要完成人">
+        <el-input type="textarea" :rows="3" v-model="detail.subject_peoples" :disabled="true"/>
+      </el-form-item>
+      <el-form-item label="完成时间">
         <el-input v-model="detail.subject_time" :disabled="true"/>
       </el-form-item>
-      <el-form-item label="研究经费">
-        <el-input v-model="detail.subject_funding" :disabled="true"/>
+      <el-form-item label="获奖情况">
+        <el-input v-model="detail.subject_desc" :disabled="true"/>
       </el-form-item>
-      <el-form-item label="经费来源">
-        <el-input v-model="detail.subject_from" :disabled="true"/>
-      </el-form-item>
-      <el-form-item label="项目说明">
-        <el-input type="textarea" :rows="3" v-model="detail.subject_desc" :disabled="true"/>
-      </el-form-item>
-      <el-form-item label="申请时间">
-        <el-input v-model="detail.apply_time" :disabled="true"/>
+      <el-form-item label="备注">
+        <el-input type="textarea" :rows="3" v-model="detail.note" :disabled="true"/>
       </el-form-item>
       <el-form-item label="证明材料">
         <img

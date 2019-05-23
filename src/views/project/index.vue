@@ -28,45 +28,46 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" align="center" width="55" fixed></el-table-column>
-      <el-table-column align="center" label="工号" sortable prop="id" width="120">
+      <el-table-column align="center" label="负责人工号" sortable prop="id" width="120">
         <template slot-scope="scope">{{ scope.row.tid }}</template>
       </el-table-column>
-      <el-table-column label="教师名" width="120" align="center">
+      <el-table-column label="负责人姓名" width="120" align="center">
         <template slot-scope="scope">{{ scope.row.t_id.tname}}</template>
       </el-table-column>
-      <el-table-column label="项目名" align="center" width="120">
+      <el-table-column label="成果名" align="center" width="120">
         <template slot-scope="scope">
           <span>{{ scope.row.subject_title }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="项目级别" align="center" width="120">
+      <el-table-column label="成果类别" align="center" width="120">
         <template slot-scope="scope">
           <span>{{ scope.row.subject_type }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="时长（天）" sortable align="center" width="120" prop="subject_time">
+      <el-table-column label="级别" align="center" width="120">
+        <template slot-scope="scope">
+          <span>{{ scope.row.subject_level }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="主要完成人" align="center" width="120" prop="subject_peoples">
+        <template slot-scope="scope">
+          <span>{{ scope.row.subject_peoples }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="完成时间" sortable align="center" width="120" prop="subject_time">
         <template slot-scope="scope">
           <span>{{ scope.row.subject_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="研究经费" sortable align="center" width="120" prop="subject_funding">
+      <el-table-column label="获奖情况" align="center" width="120" prop="subject_win">
         <template slot-scope="scope">
-          <span>{{ scope.row.subject_funding }}</span>
+          <span>{{ scope.row.subject_win }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="经费来源" align="center" width="120" prop="subject_from">
+      <el-table-column label="备注" align="center" width="120" prop="note" show-overflow-tooltip>
         <template slot-scope="scope">
-          <span>{{ scope.row.subject_from }}</span>
+          <span>{{ scope.row.note }}</span>
         </template>
-      </el-table-column>
-      <el-table-column
-        align="center"
-        prop="subject_desc"
-        show-overflow-tooltip
-        label="项目说明"
-        width="140"
-      >
-        <template slot-scope="scope">{{ scope.row.subject_desc }}</template>
       </el-table-column>
       <el-table-column align="center" prop="check" label="审核状态" width="120">
         <template slot-scope="scope">
@@ -81,9 +82,6 @@
             </div>
           </el-popover>
         </template>
-      </el-table-column>
-      <el-table-column align="center" prop="apply_time" label="录入时间" width="120">
-        <template slot-scope="scope">{{ scope.row.apply_time }}</template>
       </el-table-column>
       <el-table-column align="center" prop="check_time" label="审核时间" width="120">
         <template slot-scope="scope">{{ scope.row.check_time }}</template>

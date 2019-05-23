@@ -1,26 +1,26 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="detail" label-width="120px" size="mini" :rules="rules">
-      <el-form-item label="项目名" prop="subject_title">
+      <el-form-item label="成果名">
         <el-input v-model="detail.subject_title"/>
       </el-form-item>
-      <el-form-item label="项目级别" prop="subject_title">
+      <el-form-item label="成果类别">
         <el-input v-model="detail.subject_type"/>
       </el-form-item>
-      <el-form-item label="时长（天）" prop="subject_time">
+      <el-form-item label="级别">
+        <el-input v-model="detail.subject_level"/>
+      </el-form-item>
+      <el-form-item label="主要完成人">
+        <el-input type="textarea" :rows="3" v-model="detail.subject_peoples"/>
+      </el-form-item>
+      <el-form-item label="完成时间">
         <el-input v-model="detail.subject_time"/>
       </el-form-item>
-      <el-form-item label="研究经费" prop="subject_funding">
-        <el-input v-model="detail.subject_funding"/>
+      <el-form-item label="获奖情况">
+        <el-input v-model="detail.subject_desc"/>
       </el-form-item>
-      <el-form-item label="经费来源" prop="subject_funding">
-        <el-input v-model="detail.subject_from"/>
-      </el-form-item>
-      <el-form-item label="项目说明">
-        <el-input type="textarea" :rows="3" v-model="detail.subject_desc"/>
-      </el-form-item>
-      <el-form-item label="项目说明">
-        <el-input type="textarea" :rows="3" v-model="detail.subject_desc"/>
+      <el-form-item label="备注">
+        <el-input type="textarea" :rows="3" v-model="detail.note"/>
       </el-form-item>
       <el-form-item label="证明材料">
         <img
@@ -82,17 +82,17 @@ export default {
       if (this.detail.subject_time) {
         data.subject_time = this.detail.subject_time;
       }
-      if (this.detail.subject_funding) {
-        data.subject_funding = this.detail.subject_funding;
+      if (this.detail.subject_win) {
+        data.subject_win = this.detail.subject_win;
       }
-      if (this.detail.subject_desc) {
-        data.subject_desc = this.detail.subject_desc;
+      if (this.detail.subject_peoples) {
+        data.subject_peoples = this.detail.subject_peoples;
       }
       if (this.detail.subject_type) {
         data.subject_type = this.detail.subject_type;
       }
-      if (this.detail.subject_from) {
-        data.subject_from = this.detail.subject_from;
+      if (this.detail.subject_level) {
+        data.subject_level = this.detail.subject_level;
       }
       if (this.detail.src) {
         data.src = this.detail.src;
