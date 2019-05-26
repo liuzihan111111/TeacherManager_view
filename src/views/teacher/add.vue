@@ -36,7 +36,8 @@ export default {
       form: {
         tid: "",
         tname: "",
-        major_name: ""
+        major_name: "",
+        check: 0
       },
       rules: {
         tid: [{ required: true, message: "请输入工号", trigger: "blur" }],

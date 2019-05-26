@@ -1,7 +1,13 @@
 <template>
   <div class="app-container">
-    <h3>{{locals}}</h3>
     <el-form ref="form" :model="detail" label-width="120px" size="mini">
+      <el-form-item label="审核状态">
+        <el-radio-group v-model="detail.check" size="small">
+          <el-radio-button v-model="detail.check" :label="0" disabled>未审核</el-radio-button>
+          <el-radio-button v-model="detail.check" :label="1" disabled>已通过</el-radio-button>
+          <el-radio-button v-model="detail.check" :label="2" disabled>未通过</el-radio-button>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="工号">
         <el-input v-model="detail.tid" disabled="true"/>
       </el-form-item>
@@ -70,6 +76,7 @@
       <el-form-item label="备注">
         <el-input v-model="detail.remark" type="textarea" :disabled="IsMotify"/>
       </el-form-item>
+
       <el-form-item>
         <el-button type="primary" @click="onSubmit" v-if="IsMotify">修改</el-button>
         <el-button type="primary" @click="MotifyList" v-else>保存</el-button>
@@ -84,7 +91,9 @@ import { DepartmentList } from "@/api/departments";
 export default {
   data() {
     return {
-      detail: {},
+      detail: {
+        check: 0
+      },
       id: localStorage.getItem("id"),
       departments: [], // 学院信息
       IsMotify: true // 输入框是否可填
@@ -95,6 +104,7 @@ export default {
       this.IsMotify = false;
     },
     MotifyList() {
+      this.detail.check = 0;
       console.log(this.detail);
       TeacherModify(this.detail._id, this.detail)
         .then(req => {

@@ -64,6 +64,7 @@
       </el-form-item>-->
     </el-form>
     <hr>
+    <h4>教育经历</h4>
     <el-form
       ref="form"
       :model="edu"
@@ -71,6 +72,8 @@
       size="medium"
       :inline="true"
       label-position="top"
+      :rules="rules"
+      style="padding-left:7%"
     >
       <el-form-item label="起止时间" prop="edu1_time">
         <el-input v-model="edu.edu1_time" placeholder="例:2016年6月-2019年9月"/>
@@ -102,10 +105,29 @@
         <el-input v-model="edu.edu3_name" placeholder="博士"/>
       </el-form-item>
       <br>
-      <!--  <el-form-item>
-        <el-button type="primary" @click="onSubmit">修改</el-button>
-        <el-button @click="resetForm('detail')">重置</el-button>
-      </el-form-item>-->
+      <el-form-item label="最高学历材料证明：">
+        <img
+          :src="serverurl+edu.src"
+          title="点击放大"
+          style="width:25%;cursor:pointer"
+          @click="PictureShow"
+        >
+        <el-dialog :visible.sync="dialogVisible" size="tiny">
+          <img width="100%" :src="serverurl+edu.src" alt>
+        </el-dialog>
+      </el-form-item>
+      <br>
+      <el-form-item label="审核信息：" prop="check">
+        <el-radio-group v-model="detail.check" size="small">
+          <el-radio label="2" border>不通过</el-radio>
+          <el-radio label="1" border>通过</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <br>
+      <el-form-item>
+        <el-button type="primary" size="mini" @click="onSubmit" title="提交审核状态">确定</el-button>
+        <el-button @click="resetForm('detail')" size="mini">重置</el-button>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -115,8 +137,13 @@ import { EduList, EduModify } from "@/api/edu";
 export default {
   data() {
     return {
+      dialogVisible: false,
+      serverurl: "http://localhost:3000",
       detail: {},
-      edu: {} // 存放个人的教育经历
+      edu: {}, // 存放个人的教育经历
+      rules: {
+        check: [{ required: true, message: "请选择", trigger: "blur" }]
+      }
     };
   },
   methods: {
@@ -125,10 +152,15 @@ export default {
         .then(res => {
           console.log(res);
           this.edu = res.info.list[0];
+          console.log(this.edu.src);
         })
         .catch(err => {
           console.log(err);
         });
+    },
+    // 材料放大
+    PictureShow() {
+      this.dialogVisible = true;
     },
     onSubmit() {
       TeacherModify(this.detail._id, this.detail)

@@ -101,6 +101,20 @@
       >
         <template slot-scope="scope">{{ scope.row.remark }}</template>
       </el-table-column>
+      <el-table-column align="center" prop="check" label="审核状态" width="120">
+        <template slot-scope="scope">
+          <el-popover trigger="hover" placement="top">
+            <p v-if="scope.row.check===0">该教师信息未审核！</p>
+            <p v-else-if="scope.row.check===1">该教师信息已通过审核！</p>
+            <p v-else>该教师信息审核不通过！</p>
+            <div slot="reference" class="name-wrapper">
+              <el-tag type="warning" size="medium" v-if="scope.row.check===0">未审核</el-tag>
+              <el-tag type="success" size="medium" v-else-if="scope.row.check===1">已通过</el-tag>
+              <el-tag type="danger" size="medium" v-else>未通过</el-tag>
+            </div>
+          </el-popover>
+        </template>
+      </el-table-column>
       <el-table-column align="center" prop="created_at" label="操作" width="140" fixed="right">
         <template slot-scope="scope">
           <el-button
