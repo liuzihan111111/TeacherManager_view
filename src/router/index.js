@@ -467,7 +467,7 @@ export const majorRouterMap = [
       }
     ]
   },
-  {
+  /* {
     path: '/departments',
     component: Layout,
     redirect: '/departments/list',
@@ -481,7 +481,7 @@ export const majorRouterMap = [
         meta: { title: '人员调动申请', icon: 'documentation' }
       }
     ]
-  },
+  }, */
   {
     path: '/group',
     component: Layout,
@@ -517,7 +517,7 @@ export const majorRouterMap = [
         meta: { title: '重置密码', icon: 'password' }
       }
     ]
-  },
+  }/* ,
   {
     path: 'external-link',
     component: Layout,
@@ -527,7 +527,7 @@ export const majorRouterMap = [
         meta: { title: 'External Link', icon: 'link' }
       }
     ]
-  }
+  } */
 ]
 
 export default router
